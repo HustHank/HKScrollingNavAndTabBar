@@ -9,9 +9,6 @@
 #import "UIView+HKScrollingNavAndBar.h"
 #import <objc/runtime.h>
 
-static CGFloat kStatusBarHeight = 20.f;
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-
 @implementation UIView (HKScrollingNavAndBar)
 
 #pragma mark - Setter
@@ -57,7 +54,7 @@ static CGFloat kStatusBarHeight = 20.f;
     return viewOffsetY;
 }
 
-- (CGFloat)hk_open {
+- (CGFloat)hk_expand {
     CGFloat viewOffsetY = 0;
     viewOffsetY = CGRectGetMinY(self.frame) - [self hk_openOffsetY];
     
@@ -68,7 +65,7 @@ static CGFloat kStatusBarHeight = 20.f;
     return viewOffsetY;
 }
 
-- (CGFloat)hk_close {
+- (CGFloat)hk_contract {
     CGFloat viewOffsetY = 0;
     viewOffsetY = CGRectGetMinY(self.frame) - [self hk_closeOffsetY];
     
@@ -79,21 +76,53 @@ static CGFloat kStatusBarHeight = 20.f;
     return viewOffsetY;
 }
 
-- (BOOL)hk_shouldOpen {
+- (BOOL)hk_shouldExpand {
     CGFloat viewY = CGRectGetMinY(self.frame);
-    CGFloat viewMinY = [self hk_openOffsetY];
-    if (HKScrollingNavAndBarPositionTop == self.hk_postion) {
-        viewMinY = [self hk_closeOffsetY] + ([self hk_openOffsetY] - [self hk_closeOffsetY]) * 0.5;
-    } else if (HKScrollingNavAndBarPositionBottom == self.hk_postion) {
-        viewMinY = [self hk_openOffsetY] + ([self hk_closeOffsetY] - [self hk_openOffsetY]) * 0.5;
-    } else {
-        
+    CGFloat viewMinY = 0;
+    
+    switch (self.hk_postion) {
+        case HKScrollingNavAndBarPositionTop:
+            viewMinY = [self hk_closeOffsetY] + ([self hk_openOffsetY] - [self hk_closeOffsetY]) * 0.5;
+            break;
+        case HKScrollingNavAndBarPositionBottom:
+            viewMinY = [self hk_openOffsetY] + ([self hk_closeOffsetY] - [self hk_openOffsetY]) * 0.5;
+            break;
+        default:
+            break;
     }
     
     if (viewY <= viewMinY) {
         return NO;
     }
     return YES;
+}
+
+- (BOOL)hk_isExpanded {
+    
+    switch (self.hk_postion) {
+        case HKScrollingNavAndBarPositionTop:
+            return ([self hk_statusBarHeight] + CGRectGetHeight(self.frame)) == CGRectGetMaxY(self.frame);
+        case HKScrollingNavAndBarPositionBottom:
+            return ([self hk_screenHeight] - CGRectGetHeight(self.frame)) == CGRectGetMinY(self.frame);
+        default:
+            break;
+    }
+
+    return YES;
+}
+
+- (BOOL)hk_isContracted {
+    
+    switch (self.hk_postion) {
+        case HKScrollingNavAndBarPositionTop:
+            return 0 == CGRectGetMaxY(self.frame);
+        case HKScrollingNavAndBarPositionBottom:
+            return [self hk_screenHeight] == CGRectGetMinY(self.frame);
+        default:
+            break;
+    }
+    
+    return NO;
 }
 
 #pragma mark - Private Method 
@@ -103,38 +132,67 @@ static CGFloat kStatusBarHeight = 20.f;
     CGFloat openOffsetY = [self hk_openOffsetY];
     CGFloat closeOffsetY = [self hk_closeOffsetY];
     
-    if (HKScrollingNavAndBarPositionTop == self.hk_postion) {
-        newOffsetY = CGRectGetMinY(self.frame) - deltaY;
-        newOffsetY = MAX(closeOffsetY, MIN(openOffsetY, newOffsetY));
-    } else if (HKScrollingNavAndBarPositionBottom == self.hk_postion) {
-        newOffsetY = CGRectGetMinY(self.frame) + deltaY;
-        newOffsetY = MIN(closeOffsetY, MAX(openOffsetY, newOffsetY));
-    } else {
-        
+    switch (self.hk_postion) {
+        case HKScrollingNavAndBarPositionTop: {
+            newOffsetY = CGRectGetMinY(self.frame) - deltaY;
+            newOffsetY = MAX(closeOffsetY, MIN(openOffsetY, newOffsetY));
+            break;
+        }
+        case HKScrollingNavAndBarPositionBottom: {
+            newOffsetY = CGRectGetMinY(self.frame) + deltaY;
+            newOffsetY = MIN(closeOffsetY, MAX(openOffsetY, newOffsetY));
+            break;
+        }
+        default:
+            break;
     }
+    
     return newOffsetY;
 }
 
 - (CGFloat)hk_openOffsetY {
     CGFloat openOffsetY = 0;
-    if (HKScrollingNavAndBarPositionTop == self.hk_postion) {
-        openOffsetY = kStatusBarHeight;
-    } else if (HKScrollingNavAndBarPositionBottom == self.hk_postion) {
-        openOffsetY = kScreenHeight - CGRectGetHeight(self.frame);
+    switch (self.hk_postion) {
+        case HKScrollingNavAndBarPositionTop:
+            openOffsetY = [self hk_statusBarHeight];
+            break;
+        case HKScrollingNavAndBarPositionBottom:
+            openOffsetY = [self hk_screenHeight] - CGRectGetHeight(self.frame);
+            break;
+        default:
+            break;
     }
     
     return openOffsetY;
 
 }
 
-- (CGFloat)hk_closeOffsetY {
-    CGFloat closeOffsetY = 0;
-    if (HKScrollingNavAndBarPositionTop == self.hk_postion) {
-        closeOffsetY = -(CGRectGetHeight(self.frame) + self.hk_extraDistance);
-    } else if (HKScrollingNavAndBarPositionBottom == self.hk_postion) {
-        closeOffsetY = kScreenHeight + CGRectGetHeight(self.frame) + self.hk_extraDistance;
+- (CGFloat)hk_statusBarHeight {
+    if ([[UIApplication sharedApplication] isStatusBarHidden]) {
+        return 0;
     }
     
+    CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+    return MIN(statusBarSize.width, statusBarSize.height);
+}
+
+- (CGFloat)hk_screenHeight {
+    return [UIScreen mainScreen].bounds.size.height;
+}
+
+- (CGFloat)hk_closeOffsetY {
+    CGFloat closeOffsetY = 0;
+    switch (self.hk_postion) {
+        case HKScrollingNavAndBarPositionTop:
+            closeOffsetY = -(CGRectGetHeight(self.frame) + self.hk_extraDistance);
+            break;
+        case HKScrollingNavAndBarPositionBottom:
+            closeOffsetY = [self hk_screenHeight] + CGRectGetHeight(self.frame) + self.hk_extraDistance;
+            break;
+        default:
+            break;
+    }
+
     return closeOffsetY;
 }
 

@@ -24,10 +24,14 @@ typedef NS_ENUM(NSUInteger, HKScrollingNavAndBarPosition) {
 
 - (CGFloat)hk_updateOffsetY:(CGFloat)deltaY;
 
-- (CGFloat)hk_open;
+- (CGFloat)hk_expand;
 
-- (CGFloat)hk_close;
+- (CGFloat)hk_contract;
 
-- (BOOL)hk_shouldOpen;
+- (BOOL)hk_shouldExpand;
+
+- (BOOL)hk_isExpanded;
+
+- (BOOL)hk_isContracted;
 
 @end
