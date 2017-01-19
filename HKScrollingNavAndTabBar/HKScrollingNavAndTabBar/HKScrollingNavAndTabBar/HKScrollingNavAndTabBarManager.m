@@ -17,6 +17,10 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
 @property (nonatomic, weak) UIViewController *viewController;
 @property (nonatomic, weak) UIView *scrollableView;
 @property (nonatomic, strong) UIScrollView *scrollView;
+
+@property (nonatomic, strong) UIView *topBar;
+@property (nonatomic, strong) UIView *bottomBar;
+
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
 
 @property (nonatomic, assign) CGFloat previousOffsetY;
@@ -30,6 +34,7 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
     if (self = [super init]) {
         _viewController = viewController;
         _scrollableView = scrollableView;
+        _topBar = viewController.navigationController.navigationBar;
         
         _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
         [_panGesture setMaximumNumberOfTouches:1];
@@ -38,6 +43,18 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
         [_scrollableView addGestureRecognizer:self.panGesture];
     }
     return self;
+}
+
+#pragma mark - Public Method
+
+- (void)managerTopBar:(UIView *)topBar {
+    self.topBar = topBar;
+    self.topBar.hk_postion = HKScrollingNavAndBarPositionTop;
+}
+
+- (void)managerbotomBar:(UIView *)bottomBar {
+    self.bottomBar = bottomBar;
+    self.bottomBar.hk_postion = HKScrollingNavAndBarPositionBottom;
 }
 
 #pragma mark - Gesture
@@ -87,8 +104,8 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
     }
     
     // 3 - 更新navBar和TabBar的frame
-    [[self navigationBar] hk_updateOffsetY:deltaY];
-    [[self tabBar] hk_updateOffsetY:deltaY];
+    [self.topBar hk_updateOffsetY:deltaY];
+    [self.bottomBar hk_updateOffsetY:deltaY];
     
     // 4 - 更新TableView的contentInset
     [self updateScrollViewInset];
@@ -100,24 +117,35 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
 - (void)handleScrollingEnded:(CGFloat)velocity {
     
     CGFloat minVelocity = 500.f;
-    if (![self isViewControllerVisible] || ([[self navigationBar] hk_isContracted] && velocity < minVelocity)) {
+    if (![self isViewControllerVisible] || ([self.topBar hk_isContracted] && velocity < minVelocity)) {
+        return;
+    }
+    
+    if (!self.topBar && !self.bottomBar) {
         return;
     }
     
     //NavBar和TabBar是展开还是收起
-    BOOL opening = [[self navigationBar] hk_shouldExpand];
+    BOOL opening = YES;
+    if (self.topBar) {
+        opening = [self.topBar hk_shouldExpand];
+    } else if (self.bottomBar) {
+        opening = [self.bottomBar hk_shouldExpand];
+    } else {
+        
+    }
     
     [UIView animateWithDuration:0.2 animations:^{
         
         CGFloat navBarOffsetY = 0;
         if (opening) {
             //navBarOffsetY为NavBar从当前位置到展开滑动的距离
-            navBarOffsetY = [[self navigationBar] hk_expand];
-            [[self tabBar] hk_expand];
+            navBarOffsetY = [self.topBar hk_expand];
+            [self.bottomBar hk_expand];
         } else {
             //navBarOffsetY为NavBar从当前位置到收起滑动的距离
-            navBarOffsetY = [[self navigationBar] hk_contract];
-            [[self tabBar] hk_contract];
+            navBarOffsetY = [self.topBar hk_contract];
+            [self.bottomBar hk_contract];
         }
         //更新ScrollView的contentInset
         [self updateScrollViewInset];
@@ -132,13 +160,13 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
 
 - (void)updateScrollViewInset {
     UIEdgeInsets scrollViewInset = self.scrollView.contentInset;
-    if ([self navigationBar]) {
-        CGFloat navBarMaxY = CGRectGetMaxY([self navigationBar].frame);
+    if (self.topBar) {
+        CGFloat navBarMaxY = CGRectGetMaxY(self.topBar.frame);
         scrollViewInset.top = navBarMaxY;
     }
 
-    if ([self tabBar]) {
-        CGFloat tabBarMinY = CGRectGetMinY([self tabBar].frame);
+    if (self.bottomBar) {
+        CGFloat tabBarMinY = CGRectGetMinY(self.bottomBar.frame);
         scrollViewInset.bottom = MAX(0, [self screenHeight] - tabBarMinY);
     }
 
@@ -156,14 +184,6 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
         scroll = (UIScrollView *)self.scrollableView;
     }
     return scroll;
-}
-
-- (UIView *)navigationBar {
-    return self.viewController.navigationController.navigationBar;
-}
-
-- (UIView *)tabBar {
-    return self.viewController.tabBarController.tabBar;
 }
 
 - (CGFloat)statusBarHeight {

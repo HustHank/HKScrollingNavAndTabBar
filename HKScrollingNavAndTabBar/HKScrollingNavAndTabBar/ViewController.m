@@ -34,6 +34,8 @@ static NSString * const kCellIdentifier = @"HKLiveTableViewCellIdentifier";
     [self initTableView];
     [self initDataSource];
     _manager = [[HKScrollingNavAndTabBarManager alloc] initWithController:self scrollableView:self.tableView];
+//    [_manager managerTopBar:nil];
+    [_manager managerbotomBar:self.tabBarController.tabBar];
 }
 
 - (void)initTableView {

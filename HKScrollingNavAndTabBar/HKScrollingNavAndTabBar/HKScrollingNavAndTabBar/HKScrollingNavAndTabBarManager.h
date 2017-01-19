@@ -11,9 +11,11 @@
 
 @interface HKScrollingNavAndTabBarManager : NSObject
 
-@property (nonatomic, assign) BOOL shouldScrollNavigationBar;
-@property (nonatomic, assign) BOOL shouldScrollTabBar;
-
 - (instancetype)initWithController:(UIViewController *)viewController scrollableView:(UIView *)scrollableView;
+
+///如果不设置topBar，则默认为navigationBar
+- (void)managerTopBar:(UIView *)topBar;
+
+- (void)managerbotomBar:(UIView *)bottomBar;
 
 @end

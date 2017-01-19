@@ -44,6 +44,7 @@
 - (CGFloat)hk_updateOffsetY:(CGFloat)deltaY {
     
     CGFloat viewOffsetY = 0;
+    NSLog(@"OriginY:%f",CGRectGetMinY(self.frame));
     CGFloat newOffsetY = [self hk_offsetYWithDelta:deltaY];
     viewOffsetY = CGRectGetMinY(self.frame) - newOffsetY;
     
@@ -56,10 +57,10 @@
 
 - (CGFloat)hk_expand {
     CGFloat viewOffsetY = 0;
-    viewOffsetY = CGRectGetMinY(self.frame) - [self hk_openOffsetY];
+    viewOffsetY = CGRectGetMinY(self.frame) - [self hk_expendedOffsetY];
     
     CGRect viewFrame = self.frame;
-    viewFrame.origin.y = [self hk_openOffsetY];
+    viewFrame.origin.y = [self hk_expendedOffsetY];
     self.frame = viewFrame;
     
     return viewOffsetY;
@@ -67,10 +68,10 @@
 
 - (CGFloat)hk_contract {
     CGFloat viewOffsetY = 0;
-    viewOffsetY = CGRectGetMinY(self.frame) - [self hk_closeOffsetY];
+    viewOffsetY = CGRectGetMinY(self.frame) - [self hk_contractedOffsetY];
     
     CGRect viewFrame = self.frame;
-    viewFrame.origin.y = [self hk_closeOffsetY];
+    viewFrame.origin.y = [self hk_contractedOffsetY];
     self.frame = viewFrame;
     
     return viewOffsetY;
@@ -79,22 +80,22 @@
 - (BOOL)hk_shouldExpand {
     CGFloat viewY = CGRectGetMinY(self.frame);
     CGFloat viewMinY = 0;
+    BOOL shouldExpand = YES;
     
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop:
-            viewMinY = [self hk_closeOffsetY] + ([self hk_openOffsetY] - [self hk_closeOffsetY]) * 0.5;
+            viewMinY = [self hk_contractedOffsetY] + ([self hk_expendedOffsetY] - [self hk_contractedOffsetY]) * 0.5;
+            shouldExpand = viewY >= viewMinY;
             break;
         case HKScrollingNavAndBarPositionBottom:
-            viewMinY = [self hk_openOffsetY] + ([self hk_closeOffsetY] - [self hk_openOffsetY]) * 0.5;
+            viewMinY = [self hk_expendedOffsetY] + ([self hk_contractedOffsetY] - [self hk_expendedOffsetY]) * 0.5;
+            shouldExpand = viewY <= viewMinY;
             break;
         default:
             break;
     }
     
-    if (viewY <= viewMinY) {
-        return NO;
-    }
-    return YES;
+    return shouldExpand;
 }
 
 - (BOOL)hk_isExpanded {
@@ -129,18 +130,18 @@
 
 - (CGFloat)hk_offsetYWithDelta:(CGFloat)deltaY {
     CGFloat newOffsetY = 0;
-    CGFloat openOffsetY = [self hk_openOffsetY];
-    CGFloat closeOffsetY = [self hk_closeOffsetY];
+    CGFloat expendedOffsetY = [self hk_expendedOffsetY];
+    CGFloat contractedOffsetY = [self hk_contractedOffsetY];
     
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop: {
             newOffsetY = CGRectGetMinY(self.frame) - deltaY;
-            newOffsetY = MAX(closeOffsetY, MIN(openOffsetY, newOffsetY));
+            newOffsetY = MAX(contractedOffsetY, MIN(expendedOffsetY, newOffsetY));
             break;
         }
         case HKScrollingNavAndBarPositionBottom: {
             newOffsetY = CGRectGetMinY(self.frame) + deltaY;
-            newOffsetY = MIN(closeOffsetY, MAX(openOffsetY, newOffsetY));
+            newOffsetY = MIN(contractedOffsetY, MAX(expendedOffsetY, newOffsetY));
             break;
         }
         default:
@@ -150,20 +151,20 @@
     return newOffsetY;
 }
 
-- (CGFloat)hk_openOffsetY {
-    CGFloat openOffsetY = 0;
+- (CGFloat)hk_expendedOffsetY {
+    CGFloat expendedOffsetY = 0;
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop:
-            openOffsetY = [self hk_statusBarHeight];
+            expendedOffsetY = [self hk_statusBarHeight];
             break;
         case HKScrollingNavAndBarPositionBottom:
-            openOffsetY = [self hk_screenHeight] - CGRectGetHeight(self.frame);
+            expendedOffsetY = [self hk_screenHeight] - CGRectGetHeight(self.frame);
             break;
         default:
             break;
     }
     
-    return openOffsetY;
+    return expendedOffsetY;
 
 }
 
@@ -180,20 +181,20 @@
     return [UIScreen mainScreen].bounds.size.height;
 }
 
-- (CGFloat)hk_closeOffsetY {
-    CGFloat closeOffsetY = 0;
+- (CGFloat)hk_contractedOffsetY {
+    CGFloat contractedOffsetY = 0;
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop:
-            closeOffsetY = -(CGRectGetHeight(self.frame) + self.hk_extraDistance);
+            contractedOffsetY = -(CGRectGetHeight(self.frame) + self.hk_extraDistance);
             break;
         case HKScrollingNavAndBarPositionBottom:
-            closeOffsetY = [self hk_screenHeight] + CGRectGetHeight(self.frame) + self.hk_extraDistance;
+            contractedOffsetY = [self hk_screenHeight] + self.hk_extraDistance;
             break;
         default:
             break;
     }
 
-    return closeOffsetY;
+    return contractedOffsetY;
 }
 
 @end
