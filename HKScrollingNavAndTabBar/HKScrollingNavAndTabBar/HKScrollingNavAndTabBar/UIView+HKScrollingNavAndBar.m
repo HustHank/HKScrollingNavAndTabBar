@@ -9,6 +9,12 @@
 #import "UIView+HKScrollingNavAndBar.h"
 #import <objc/runtime.h>
 
+@interface UIView ()
+
+@property (nonatomic, strong) NSMutableArray *hk_visibleSubViews;
+
+@end
+
 @implementation UIView (HKScrollingNavAndBar)
 
 #pragma mark - Setter
@@ -18,6 +24,14 @@
 
 - (void)setHk_extraDistance:(CGFloat)hk_extraDistance {
     objc_setAssociatedObject(self, @selector(hk_extraDistance), @(hk_extraDistance), OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (void)setHk_alphaFadeEnabled:(BOOL)hk_alphaFadeEnabled {
+    objc_setAssociatedObject(self, @selector(hk_alphaFadeEnabled), @(hk_alphaFadeEnabled), OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (void)setHk_visibleSubViews:(NSMutableArray *)hk_visibleSubViews {
+    objc_setAssociatedObject(self, @selector(hk_visibleSubViews), hk_visibleSubViews, OBJC_ASSOCIATION_RETAIN);
 }
 
 #pragma mark - Getter
@@ -38,6 +52,24 @@
     }
     
     return [extraDistanceNumber floatValue];
+}
+
+- (BOOL)hk_alphaFadeEnabled {
+    NSNumber *alphaFadeEnabled = objc_getAssociatedObject(self, @selector(hk_alphaFadeEnabled));
+    if (!alphaFadeEnabled) {
+        return YES;
+    }
+    
+    return [alphaFadeEnabled boolValue];
+}
+
+- (NSMutableArray *)hk_visibleSubViews {
+    NSMutableArray *visibleSubViews = objc_getAssociatedObject(self, @selector(hk_alphaFadeEnabled));
+    if (!visibleSubViews) {
+        return @[].mutableCopy;
+    }
+    
+    return visibleSubViews;
 }
 
 #pragma makr - Public Method
@@ -165,8 +197,28 @@
     }
     
     return expendedOffsetY;
-
 }
+
+- (void)hk_updateSubviewsToAlpha:(CGFloat)alpha {
+    if (!self.hk_visibleSubViews) {
+        // loops through and subview and save the visible ones in navSubviews array
+        for (UIView *subView in self.subviews) {
+            BOOL isBackgroundView = (subView == self.subviews[0]);
+            BOOL isViewHidden = (subView.isHidden || floor(subView.alpha) < FLT_EPSILON);
+            
+            if (!isBackgroundView && !isViewHidden) {
+                [self.hk_visibleSubViews addObject:subView];
+            }
+        }
+    }
+    
+    for (UIView *subView in self.hk_visibleSubViews) {
+        subView.alpha = alpha;
+    }
+}
+
+
+#pragma mark - Getters
 
 - (CGFloat)hk_statusBarHeight {
     if ([[UIApplication sharedApplication] isStatusBarHidden]) {

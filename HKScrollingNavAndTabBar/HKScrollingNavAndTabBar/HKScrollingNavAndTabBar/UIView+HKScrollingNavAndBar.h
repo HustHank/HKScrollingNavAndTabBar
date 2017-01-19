@@ -21,6 +21,8 @@ typedef NS_ENUM(NSUInteger, HKScrollingNavAndBarPosition) {
 @property (nonatomic, assign) HKScrollingNavAndBarPosition hk_postion;
 ///需要额外移动的距离
 @property (nonatomic, assign) CGFloat hk_extraDistance;
+///是否需要在滑动过程中透明度渐变
+@property (nonatomic, assign) BOOL hk_alphaFadeEnabled;
 
 - (CGFloat)hk_updateOffsetY:(CGFloat)deltaY;
 
