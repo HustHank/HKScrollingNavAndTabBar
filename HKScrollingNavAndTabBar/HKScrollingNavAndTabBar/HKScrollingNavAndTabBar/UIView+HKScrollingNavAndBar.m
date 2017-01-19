@@ -64,12 +64,7 @@
 }
 
 - (NSMutableArray *)hk_visibleSubViews {
-    NSMutableArray *visibleSubViews = objc_getAssociatedObject(self, @selector(hk_alphaFadeEnabled));
-    if (!visibleSubViews) {
-        return @[].mutableCopy;
-    }
-    
-    return visibleSubViews;
+    return objc_getAssociatedObject(self, @selector(hk_alphaFadeEnabled));
 }
 
 #pragma makr - Public Method
@@ -84,6 +79,17 @@
     viewFrame.origin.y = newOffsetY;
     self.frame = viewFrame;
     
+    if (self.hk_alphaFadeEnabled) {
+        CGFloat currentViewY = CGRectGetMinY(self.frame);
+        CGFloat d1 = (currentViewY - [self hk_viewMinY]);
+        CGFloat d2 = ([self hk_ViewMaxY] - [self hk_viewMinY]);
+        CGFloat percent = d1 * 1.0f / d2;
+        CGFloat alpha = 1 - percent;
+        NSLog(@"percent:%f alpha:%f",percent,alpha);
+//        CGFloat alpha = 1 - ((currentViewY - [self hk_viewMinY]) * 1.0f / ([self hk_ViewMaxY] - [self hk_viewMinY]));
+        [self hk_updateSubviewsToAlpha:alpha];
+    }
+    
     return viewOffsetY;
 }
 
@@ -95,6 +101,10 @@
     viewFrame.origin.y = [self hk_expendedOffsetY];
     self.frame = viewFrame;
     
+    if (self.hk_alphaFadeEnabled) {
+        [self hk_updateSubviewsToAlpha:1.f];
+    }
+
     return viewOffsetY;
 }
 
@@ -106,6 +116,10 @@
     viewFrame.origin.y = [self hk_contractedOffsetY];
     self.frame = viewFrame;
     
+    if (self.hk_alphaFadeEnabled) {
+        [self hk_updateSubviewsToAlpha:0.f];
+    }
+
     return viewOffsetY;
 }
 
@@ -128,6 +142,14 @@
     }
     
     return shouldExpand;
+}
+
+- (CGFloat)hk_viewMinY {
+    return MIN([self hk_expendedOffsetY], [self hk_contractedOffsetY]);
+}
+
+- (CGFloat)hk_ViewMaxY {
+    return MAX([self hk_expendedOffsetY], [self hk_contractedOffsetY]);
 }
 
 - (BOOL)hk_isExpanded {
@@ -200,7 +222,11 @@
 }
 
 - (void)hk_updateSubviewsToAlpha:(CGFloat)alpha {
+    [self hk_updateSubviewsToAlphaImp:alpha];
+    return;
+    
     if (!self.hk_visibleSubViews) {
+        self.hk_visibleSubViews = @[].mutableCopy;
         // loops through and subview and save the visible ones in navSubviews array
         for (UIView *subView in self.subviews) {
             BOOL isBackgroundView = (subView == self.subviews[0]);
@@ -213,6 +239,24 @@
     }
     
     for (UIView *subView in self.hk_visibleSubViews) {
+        subView.alpha = alpha;
+    }
+}
+
+- (void)hk_updateSubviewsToAlphaImp:(CGFloat)alpha {
+    NSMutableArray *visibleSubViews = @[].mutableCopy;
+    
+    // loops through and subview and save the visible ones in navSubviews array
+    for (UIView *subView in self.subviews) {
+        BOOL isBackgroundView = (subView == self.subviews[0]);
+        BOOL isViewHidden = (subView.isHidden || floor(subView.alpha) < FLT_EPSILON);
+        
+        if (!isBackgroundView && !isViewHidden) {
+            [visibleSubViews addObject:subView];
+        }
+    }
+    
+    for (UIView *subView in visibleSubViews) {
         subView.alpha = alpha;
     }
 }
