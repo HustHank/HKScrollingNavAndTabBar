@@ -64,14 +64,13 @@
 }
 
 - (NSMutableArray *)hk_visibleSubViews {
-    return objc_getAssociatedObject(self, @selector(hk_alphaFadeEnabled));
+    return objc_getAssociatedObject(self, @selector(hk_visibleSubViews));
 }
 
 #pragma makr - Public Method
 - (CGFloat)hk_updateOffsetY:(CGFloat)deltaY {
     
     CGFloat viewOffsetY = 0;
-    NSLog(@"OriginY:%f",CGRectGetMinY(self.frame));
     CGFloat newOffsetY = [self hk_offsetYWithDelta:deltaY];
     viewOffsetY = CGRectGetMinY(self.frame) - newOffsetY;
     
@@ -81,12 +80,8 @@
     
     if (self.hk_alphaFadeEnabled) {
         CGFloat currentViewY = CGRectGetMinY(self.frame);
-        CGFloat d1 = (currentViewY - [self hk_viewMinY]);
-        CGFloat d2 = ([self hk_ViewMaxY] - [self hk_viewMinY]);
-        CGFloat percent = d1 * 1.0f / d2;
-        CGFloat alpha = 1 - percent;
-        NSLog(@"percent:%f alpha:%f",percent,alpha);
-//        CGFloat alpha = 1 - ((currentViewY - [self hk_viewMinY]) * 1.0f / ([self hk_ViewMaxY] - [self hk_viewMinY]));
+        CGFloat alpha = ((currentViewY - [self hk_viewMinY]) * 1.0f / ([self hk_ViewMaxY] - [self hk_viewMinY]));
+        NSLog(@"alpha:%f",alpha);
         [self hk_updateSubviewsToAlpha:alpha];
     }
     
@@ -95,14 +90,15 @@
 
 - (CGFloat)hk_expand {
     CGFloat viewOffsetY = 0;
-    viewOffsetY = CGRectGetMinY(self.frame) - [self hk_expendedOffsetY];
+    viewOffsetY = CGRectGetMinY(self.frame) - [self hk_expandedOffsetY];
     
     CGRect viewFrame = self.frame;
-    viewFrame.origin.y = [self hk_expendedOffsetY];
+    viewFrame.origin.y = [self hk_expandedOffsetY];
     self.frame = viewFrame;
     
     if (self.hk_alphaFadeEnabled) {
         [self hk_updateSubviewsToAlpha:1.f];
+        self.hk_visibleSubViews = nil;
     }
 
     return viewOffsetY;
@@ -130,11 +126,11 @@
     
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop:
-            viewMinY = [self hk_contractedOffsetY] + ([self hk_expendedOffsetY] - [self hk_contractedOffsetY]) * 0.5;
+            viewMinY = [self hk_contractedOffsetY] + ([self hk_expandedOffsetY] - [self hk_contractedOffsetY]) * 0.5;
             shouldExpand = viewY >= viewMinY;
             break;
         case HKScrollingNavAndBarPositionBottom:
-            viewMinY = [self hk_expendedOffsetY] + ([self hk_contractedOffsetY] - [self hk_expendedOffsetY]) * 0.5;
+            viewMinY = [self hk_expandedOffsetY] + ([self hk_contractedOffsetY] - [self hk_expandedOffsetY]) * 0.5;
             shouldExpand = viewY <= viewMinY;
             break;
         default:
@@ -145,11 +141,11 @@
 }
 
 - (CGFloat)hk_viewMinY {
-    return MIN([self hk_expendedOffsetY], [self hk_contractedOffsetY]);
+    return MIN([self hk_expandedOffsetY], [self hk_contractedOffsetY]);
 }
 
 - (CGFloat)hk_ViewMaxY {
-    return MAX([self hk_expendedOffsetY], [self hk_contractedOffsetY]);
+    return MAX([self hk_expandedOffsetY], [self hk_contractedOffsetY]);
 }
 
 - (BOOL)hk_isExpanded {
@@ -184,18 +180,18 @@
 
 - (CGFloat)hk_offsetYWithDelta:(CGFloat)deltaY {
     CGFloat newOffsetY = 0;
-    CGFloat expendedOffsetY = [self hk_expendedOffsetY];
+    CGFloat expandedOffsetY = [self hk_expandedOffsetY];
     CGFloat contractedOffsetY = [self hk_contractedOffsetY];
     
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop: {
             newOffsetY = CGRectGetMinY(self.frame) - deltaY;
-            newOffsetY = MAX(contractedOffsetY, MIN(expendedOffsetY, newOffsetY));
+            newOffsetY = MAX(contractedOffsetY, MIN(expandedOffsetY, newOffsetY));
             break;
         }
         case HKScrollingNavAndBarPositionBottom: {
             newOffsetY = CGRectGetMinY(self.frame) + deltaY;
-            newOffsetY = MIN(contractedOffsetY, MAX(expendedOffsetY, newOffsetY));
+            newOffsetY = MIN(contractedOffsetY, MAX(expandedOffsetY, newOffsetY));
             break;
         }
         default:
@@ -205,26 +201,24 @@
     return newOffsetY;
 }
 
-- (CGFloat)hk_expendedOffsetY {
-    CGFloat expendedOffsetY = 0;
+- (CGFloat)hk_expandedOffsetY {
+    CGFloat expandedOffsetY = 0;
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop:
-            expendedOffsetY = [self hk_statusBarHeight];
+            expandedOffsetY = [self hk_statusBarHeight];
             break;
         case HKScrollingNavAndBarPositionBottom:
-            expendedOffsetY = [self hk_screenHeight] - CGRectGetHeight(self.frame);
+            expandedOffsetY = [self hk_screenHeight] - CGRectGetHeight(self.frame);
             break;
         default:
             break;
     }
     
-    return expendedOffsetY;
+    return expandedOffsetY;
 }
 
 - (void)hk_updateSubviewsToAlpha:(CGFloat)alpha {
-    [self hk_updateSubviewsToAlphaImp:alpha];
-    return;
-    
+
     if (!self.hk_visibleSubViews) {
         self.hk_visibleSubViews = @[].mutableCopy;
         // loops through and subview and save the visible ones in navSubviews array
@@ -242,25 +236,6 @@
         subView.alpha = alpha;
     }
 }
-
-- (void)hk_updateSubviewsToAlphaImp:(CGFloat)alpha {
-    NSMutableArray *visibleSubViews = @[].mutableCopy;
-    
-    // loops through and subview and save the visible ones in navSubviews array
-    for (UIView *subView in self.subviews) {
-        BOOL isBackgroundView = (subView == self.subviews[0]);
-        BOOL isViewHidden = (subView.isHidden || floor(subView.alpha) < FLT_EPSILON);
-        
-        if (!isBackgroundView && !isViewHidden) {
-            [visibleSubViews addObject:subView];
-        }
-    }
-    
-    for (UIView *subView in visibleSubViews) {
-        subView.alpha = alpha;
-    }
-}
-
 
 #pragma mark - Getters
 
