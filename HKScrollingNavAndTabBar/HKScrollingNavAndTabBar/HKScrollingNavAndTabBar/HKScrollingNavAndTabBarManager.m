@@ -9,9 +9,6 @@
 #import "HKScrollingNavAndTabBarManager.h"
 #import "UIView+HKScrollingNavAndBar.h"
 
-//中间按钮超出TabBar的距离，根据实际情况来定
-static CGFloat kTabBarCenterButtonDelta = 44.f;
-
 @interface HKScrollingNavAndTabBarManager () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) UIViewController *viewController;
@@ -35,7 +32,7 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
         _viewController = viewController;
         _scrollableView = scrollableView;
         _topBar = viewController.navigationController.navigationBar;
-        
+
         _panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
         [_panGesture setMaximumNumberOfTouches:1];
         
@@ -55,6 +52,35 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
 - (void)managerbotomBar:(UIView *)bottomBar {
     self.bottomBar = bottomBar;
     self.bottomBar.hk_postion = HKScrollingNavAndBarPositionBottom;
+}
+
+- (void)expand {
+    [self.topBar hk_expand];
+    [self.bottomBar hk_expand];
+}
+
+- (void)contract {
+    [self.topBar hk_contract];
+    [self.bottomBar hk_contract];
+}
+
+#pragma mark - Private Mehod 
+
+- (CGFloat)exceededDistanceOfBottomBar {
+    CGFloat exceededDistance = 0.f;
+    CGFloat minSubViewOffsetY = 0.f;
+    
+    for (UIView *subView in self.bottomBar.subviews) {
+        BOOL isViewHidden = (subView.isHidden || subView.alpha < FLT_EPSILON);
+        if (!isViewHidden) {
+            CGFloat subViewOffsetY = CGRectGetMinY(subView.frame);
+            minSubViewOffsetY = MIN(minSubViewOffsetY, subViewOffsetY);
+        }
+    }
+    
+    exceededDistance = -minSubViewOffsetY;
+    
+    return exceededDistance;
 }
 
 #pragma mark - Gesture
@@ -174,6 +200,25 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
     self.scrollView.scrollIndicatorInsets = scrollViewInset;
 }
 
+#pragma mark - Setters
+- (void)setTopBarContracedPostion:(HKScrollingTopBarContractedPosition)topBarContracedPostion {
+    _topBarContracedPostion = topBarContracedPostion;
+    if (HKScrollingTopBarContractedPositionStatusBar == topBarContracedPostion) {
+        self.topBar.hk_extraDistance = [self statusBarHeight];
+    } else {
+        self.topBar.hk_extraDistance = 0;
+    }
+}
+
+- (void)setBottomBarContracedPostion:(HKScrollingBottomBarContractedPosition)bottomBarContracedPostion {
+    _bottomBarContracedPostion = bottomBarContracedPostion;
+    if (HKScrollingBottomBarContractedPositionExceeded == bottomBarContracedPostion) {
+        self.bottomBar.hk_extraDistance = [self exceededDistanceOfBottomBar];
+    } else {
+        self.bottomBar.hk_extraDistance = 0;
+    }
+}
+
 #pragma mark - Getters
 
 - (UIScrollView *)scrollView {
@@ -211,17 +256,12 @@ static CGFloat kTabBarCenterButtonDelta = 44.f;
     return YES;
 }
 
-- (void)stopFollowingScrollView {
-//    [self showNavBarAnimated:NO];
-    [self.scrollableView removeGestureRecognizer:self.panGesture];
-
-    self.scrollableView = nil;
-    self.panGesture = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-}
 
 - (void)dealloc {
-    [self stopFollowingScrollView];
+    [self.scrollableView removeGestureRecognizer:self.panGesture];
+    
+    self.scrollableView = nil;
+    self.panGesture = nil;
 }
 
 @end

@@ -10,7 +10,7 @@
 
 typedef NS_ENUM(NSUInteger, HKScrollingNavAndBarPosition) {
     ///NavBar
-    HKScrollingNavAndBarPositionTop,
+    HKScrollingNavAndBarPositionTop = 0,
     ///TabBar
     HKScrollingNavAndBarPositionBottom,
 };

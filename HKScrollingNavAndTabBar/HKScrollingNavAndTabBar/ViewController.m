@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "HKScrollingNavAndTabBarManager.h"
+#import "UIViewController+HKScrollingNavAndTabBar.h"
 
 static NSString * const kCellIdentifier = @"HKLiveTableViewCellIdentifier";
 
@@ -15,8 +15,6 @@ static NSString * const kCellIdentifier = @"HKLiveTableViewCellIdentifier";
 
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UITableView *tableView;
-
-@property (nonatomic, strong) HKScrollingNavAndTabBarManager *manager;
 
 @end
 
@@ -28,14 +26,25 @@ static NSString * const kCellIdentifier = @"HKLiveTableViewCellIdentifier";
      [self commonInit];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self hk_expand];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self hk_expand];
+}
+
 #pragma mark - Init
 - (void)commonInit {
     
     [self initTableView];
     [self initDataSource];
-    _manager = [[HKScrollingNavAndTabBarManager alloc] initWithController:self scrollableView:self.tableView];
+    [self hk_followScrollView:self.tableView];
 //    [_manager managerTopBar:nil];
-    [_manager managerbotomBar:self.tabBarController.tabBar];
+    self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionStatusBar;
+    [self hk_managerbotomBar:self.tabBarController.tabBar];
 }
 
 - (void)initTableView {
@@ -89,7 +98,8 @@ static NSString * const kCellIdentifier = @"HKLiveTableViewCellIdentifier";
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    ViewController *controller = [[ViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 
