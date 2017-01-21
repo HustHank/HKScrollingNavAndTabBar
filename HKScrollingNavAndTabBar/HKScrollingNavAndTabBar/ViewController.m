@@ -42,10 +42,12 @@ static NSString * const kCellIdentifier = @"HKLiveTableViewCellIdentifier";
     [self initTableView];
     [self initDataSource];
     [self hk_followScrollView:self.tableView];
-//    [_manager managerTopBar:nil];
-    self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionStatusBar;
+    self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionTop;
     self.hk_alphaFadeEnabled = NO;
     [self hk_managerbotomBar:self.tabBarController.tabBar];
+    [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
+        NSLog(@"state:%ld",(long)state);
+    }];
 }
 
 - (void)initTableView {

@@ -65,6 +65,7 @@
     if (self.hk_alphaFadeEnabled) {
         CGFloat alpha = (currentViewY - [self hk_viewMinY]) * 1.0f / ([self hk_ViewMaxY] - [self hk_viewMinY]);
         [self hk_updateSubviewsToAlpha:alpha];
+        
     } else {
         if ([self hk_isContracted]) {
             [self hk_updateSubviewsToAlpha:0.f];
@@ -137,7 +138,6 @@
 }
 
 - (BOOL)hk_isExpanded {
-    
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop:
             return ([self hk_statusBarHeight] + CGRectGetHeight(self.frame)) == CGRectGetMaxY(self.frame);
@@ -151,7 +151,6 @@
 }
 
 - (BOOL)hk_isContracted {
-    
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop:
             return self.hk_extraDistance == CGRectGetMaxY(self.frame);
@@ -190,7 +189,6 @@
 }
 
 - (void)hk_updateSubviewsToAlpha:(CGFloat)alpha {
-
     if (!self.hk_visibleSubViews) {
         self.hk_visibleSubViews = @[].mutableCopy;
         // loops through and subview and save the visible ones in navSubviews array

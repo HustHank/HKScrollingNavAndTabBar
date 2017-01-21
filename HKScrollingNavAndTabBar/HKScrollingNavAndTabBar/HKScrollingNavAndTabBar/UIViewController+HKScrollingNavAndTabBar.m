@@ -12,15 +12,16 @@
 
 @interface UIViewController () <UIGestureRecognizerDelegate>
 
-//@property (nonatomic, weak) UIView *hk_scrollableView;
-//
-//@property (nonatomic, strong) UIView *hk_topBar;
-//@property (nonatomic, strong) UIView *hk_bottomBar;
-//
-//@property (nonatomic, strong) UIPanGestureRecognizer *hk_panGesture;
-//
-//@property (nonatomic, assign) CGFloat hk_previousOffsetY;
-//@property (nonatomic, assign) CGFloat hk_topInset;
+@property (nonatomic, weak)   UIView *hk_scrollableView;
+@property (nonatomic, weak) UIView *hk_topBar;
+@property (nonatomic, weak) UIView *hk_bottomBar;
+
+@property (nonatomic, strong) UIPanGestureRecognizer *hk_panGesture;
+
+@property (nonatomic, assign) CGFloat hk_previousOffsetY;
+@property (nonatomic, assign) CGFloat hk_topInset;
+
+@property (nonatomic, copy) HKScrollingBarDidChangeBlock hk_barStateBlock;
 
 @end
 
@@ -40,7 +41,6 @@
 }
 
 - (void)hk_stopFollowingScrollView {
-    
     [self hk_expand];
     [self.hk_scrollableView removeGestureRecognizer:self.hk_panGesture];
     
@@ -71,6 +71,10 @@
     [self.hk_bottomBar hk_contract];
 }
 
+- (void)hk_setBarDidChangeStateBlock:(HKScrollingBarDidChangeBlock)block {
+    self.hk_barStateBlock = block;
+}
+
 #pragma mark - Private Mehod
 
 - (CGFloat)hk_exceededDistanceOfBottomBar {
@@ -86,14 +90,29 @@
     }
     
     exceededDistance = -minSubViewOffsetY;
-    
     return exceededDistance;
+}
+
+- (CGFloat)hk_statusBarHeight {
+    if ([[UIApplication sharedApplication] isStatusBarHidden]) {
+        return 0;
+    }
+    
+    CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+    return MIN(statusBarSize.width, statusBarSize.height);
+}
+
+- (CGFloat)hk_screenHeight {
+    return [UIScreen mainScreen].bounds.size.height;
+}
+
+- (BOOL)hk_isViewControllerVisible {
+    return self.isViewLoaded && self.view.window != nil;
 }
 
 #pragma mark - Gesture
 
 - (void)hk_handlePanGesture:(UIPanGestureRecognizer *)gesture {
-    
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan: {
             self.hk_topInset = self.navigationController.navigationBar.frame.size.height + [self hk_statusBarHeight];
@@ -145,10 +164,15 @@
     
     // 5 - 保存当前的contentOffsetY
     self.hk_previousOffsetY = contentOffsetY;
+    
+    // 6 - 更新Bar状态，并进行回调
+    HKScrollingNavAndTabBarState barState = [self hk_getBarStateWithDelta:deltaY];
+    if (self.hk_barStateBlock) {
+        self.hk_barStateBlock(barState);
+    }
 }
 
 - (void)hk_handleScrollingEnded:(CGFloat)velocity {
-    
     CGFloat minVelocity = 500.f;
     if (![self hk_isViewControllerVisible] || ([self.hk_topBar hk_isContracted] && velocity < minVelocity)) {
         return;
@@ -159,11 +183,11 @@
     }
     
     //NavBar和TabBar是展开还是收起
-    BOOL opening = YES;
+    BOOL shouldExpanded = YES;
     if (self.hk_topBar) {
-        opening = [self.hk_topBar hk_shouldExpand];
+        shouldExpanded = [self.hk_topBar hk_shouldExpand];
     } else if (self.hk_bottomBar) {
-        opening = [self.hk_bottomBar hk_shouldExpand];
+        shouldExpanded = [self.hk_bottomBar hk_shouldExpand];
     } else {
         
     }
@@ -171,7 +195,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         
         CGFloat navBarOffsetY = 0;
-        if (opening) {
+        if (shouldExpanded) {
             //navBarOffsetY为NavBar从当前位置到展开滑动的距离
             navBarOffsetY = [self.hk_topBar hk_expand];
             [self.hk_bottomBar hk_expand];
@@ -183,7 +207,7 @@
         //更新ScrollView的contentInset
         [self hk_updateScrollViewInset];
         //根据NavBar的偏移量来滑动TableView
-        if (opening) {
+        if (shouldExpanded) {
             CGPoint contentOffset = self.hk_scrollView.contentOffset;
             contentOffset.y += navBarOffsetY;
             self.hk_scrollView.contentOffset = contentOffset;
@@ -207,17 +231,78 @@
     self.hk_scrollView.scrollIndicatorInsets = scrollViewInset;
 }
 
+- (HKScrollingNavAndTabBarState)hk_getBarStateWithDelta:(CGFloat)delta {
+    HKScrollingNavAndTabBarState barState;
+    if (delta < 0) {
+        barState = HKScrollingNavAndTabBarStateExpanding;
+    } else {
+        barState = HKScrollingNavAndTabBarStateContracting;
+    }
+    
+    do {
+        
+        if (!self.hk_topBar && !self.hk_bottomBar) break;
+        
+        if ([self hk_isExpanded]) {
+            barState = HKScrollingNavAndTabBarStateExpanded;
+            break;
+        }
+        
+        if ([self hk_isContracted]) {
+            barState = HKScrollingNavAndTabBarStateContracted;
+        }
+        
+    } while (0);
+    
+    return barState;
+}
+
+- (BOOL)hk_isExpanded {
+    BOOL isExpanded = NO;
+    BOOL isTopBarExpanded = YES;
+    BOOL isBottomBarExpanded = YES;
+    
+    if (self.hk_topBar) {
+        isTopBarExpanded = [self.hk_topBar hk_isExpanded];
+    }
+    
+    if (self.hk_bottomBar) {
+        isBottomBarExpanded = [self.hk_bottomBar hk_isExpanded];
+    }
+    
+    isExpanded = (isTopBarExpanded && isBottomBarExpanded);
+    return isExpanded;
+}
+
+- (BOOL)hk_isContracted {
+    BOOL isContracted = NO;
+    BOOL isTopBarContracted = YES;
+    BOOL isBottomBarContracted = YES;
+    
+    if (self.hk_topBar) {
+        isTopBarContracted = [self.hk_topBar hk_isContracted];
+    }
+    
+    if (self.hk_bottomBar) {
+        isBottomBarContracted = [self.hk_bottomBar hk_isContracted];
+    }
+    
+    isContracted = (isTopBarContracted && isBottomBarContracted);
+    return isContracted;
+}
+
 #pragma mark - Setters
+
 - (void)setHk_scrollableView:(UIView *)hk_scrollableView {
     objc_setAssociatedObject(self, @selector(hk_scrollableView), hk_scrollableView, OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (void)setHk_topBar:(UIView *)hk_topBar {
-    objc_setAssociatedObject(self, @selector(hk_topBar), hk_topBar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(hk_topBar), hk_topBar, OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (void)setHk_bottomBar:(UIView *)hk_bottomBar {
-    objc_setAssociatedObject(self, @selector(hk_bottomBar), hk_bottomBar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(hk_bottomBar), hk_bottomBar, OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (void)setHk_panGesture:(UIPanGestureRecognizer *)hk_panGesture {
@@ -233,13 +318,13 @@
 }
 
 - (void)setHk_topBarContracedPostion:(HKScrollingTopBarContractedPosition)hk_topBarContracedPostion {
-    objc_setAssociatedObject(self, @selector(hk_topBarContracedPostion), @(hk_topBarContracedPostion), OBJC_ASSOCIATION_ASSIGN);
-    
     if (HKScrollingTopBarContractedPositionStatusBar == hk_topBarContracedPostion) {
         self.hk_topBar.hk_extraDistance = [self hk_statusBarHeight];
     } else {
         self.hk_topBar.hk_extraDistance = 0;
     }
+    
+    objc_setAssociatedObject(self, @selector(hk_topBarContracedPostion), @(hk_topBarContracedPostion), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)setHk_alphaFadeEnabled:(BOOL)hk_alphaFadeEnabled {
@@ -247,6 +332,10 @@
     self.hk_bottomBar.hk_alphaFadeEnabled = hk_alphaFadeEnabled;
     
     objc_setAssociatedObject(self, @selector(hk_alphaFadeEnabled), @(hk_alphaFadeEnabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)setHk_barStateBlock:(HKScrollingBarDidChangeBlock)hk_barStateBlock {
+    objc_setAssociatedObject(self, @selector(hk_barStateBlock), hk_barStateBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 #pragma mark - Getters
@@ -279,6 +368,10 @@
     return [objc_getAssociatedObject(self, @selector(hk_topBarContracedPostion)) unsignedIntegerValue];
 }
 
+- (HKScrollingBarDidChangeBlock)hk_barStateBlock {
+    return objc_getAssociatedObject(self, @selector(hk_barStateBlock));
+}
+
 - (BOOL)hk_alphaFadeEnabled {
     return [objc_getAssociatedObject(self, @selector(hk_alphaFadeEnabled)) boolValue];
 }
@@ -291,23 +384,6 @@
         scroll = (UIScrollView *)self.hk_scrollableView;
     }
     return scroll;
-}
-
-- (CGFloat)hk_statusBarHeight {
-    if ([[UIApplication sharedApplication] isStatusBarHidden]) {
-        return 0;
-    }
-    
-    CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
-    return MIN(statusBarSize.width, statusBarSize.height);
-}
-
-- (CGFloat)hk_screenHeight {
-    return [UIScreen mainScreen].bounds.size.height;
-}
-
-- (BOOL)hk_isViewControllerVisible {
-    return self.isViewLoaded && self.view.window != nil;
 }
 
 #pragma mark - UIGestureRecognizerDelegate
