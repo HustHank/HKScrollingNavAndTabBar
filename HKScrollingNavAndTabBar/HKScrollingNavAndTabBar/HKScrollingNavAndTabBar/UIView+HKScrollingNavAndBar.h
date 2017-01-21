@@ -9,19 +9,19 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, HKScrollingNavAndBarPosition) {
-    ///NavBar
+    /** 顶部Bar */
     HKScrollingNavAndBarPositionTop = 0,
-    ///TabBar
+    /** 底部Bar */
     HKScrollingNavAndBarPositionBottom,
 };
 
 @interface UIView (HKScrollingNavAndBar)
 
-//NavBar or TabBar
+/** Bar类型 */
 @property (nonatomic, assign) HKScrollingNavAndBarPosition hk_postion;
-///需要额外移动的距离
+/** 需要额外移动的距离 */
 @property (nonatomic, assign) CGFloat hk_extraDistance;
-///是否需要在滑动过程中透明度渐变
+/** 是否需要在滑动过程中透明度渐变 */
 @property (nonatomic, assign) BOOL hk_alphaFadeEnabled;
 
 - (CGFloat)hk_updateOffsetY:(CGFloat)deltaY;

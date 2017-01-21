@@ -54,6 +54,10 @@
     CGFloat newOffsetY = [self hk_offsetYWithDelta:deltaY];
     viewOffsetY = currentViewY - newOffsetY;
     
+    if (0 == viewOffsetY) {
+        return viewOffsetY;
+    }
+    
     CGRect viewFrame = self.frame;
     viewFrame.origin.y = newOffsetY;
     self.frame = viewFrame;
@@ -61,6 +65,12 @@
     if (self.hk_alphaFadeEnabled) {
         CGFloat alpha = (currentViewY - [self hk_viewMinY]) * 1.0f / ([self hk_ViewMaxY] - [self hk_viewMinY]);
         [self hk_updateSubviewsToAlpha:alpha];
+    } else {
+        if ([self hk_isContracted]) {
+            [self hk_updateSubviewsToAlpha:0.f];
+        } else {
+            [self hk_updateSubviewsToAlpha:1.f];
+        }
     }
     
     return viewOffsetY;
@@ -144,9 +154,9 @@
     
     switch (self.hk_postion) {
         case HKScrollingNavAndBarPositionTop:
-            return 0 == CGRectGetMaxY(self.frame);
+            return self.hk_extraDistance == CGRectGetMaxY(self.frame);
         case HKScrollingNavAndBarPositionBottom:
-            return [self hk_screenHeight] == CGRectGetMinY(self.frame);
+            return [self hk_screenHeight] + self.hk_extraDistance == CGRectGetMinY(self.frame);
         default:
             break;
     }

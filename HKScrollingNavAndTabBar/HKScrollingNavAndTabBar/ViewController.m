@@ -44,6 +44,7 @@ static NSString * const kCellIdentifier = @"HKLiveTableViewCellIdentifier";
     [self hk_followScrollView:self.tableView];
 //    [_manager managerTopBar:nil];
     self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionStatusBar;
+    self.hk_alphaFadeEnabled = NO;
     [self hk_managerbotomBar:self.tabBarController.tabBar];
 }
 
@@ -93,7 +94,7 @@ static NSString * const kCellIdentifier = @"HKLiveTableViewCellIdentifier";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"contentOffset:%f",scrollView.contentOffset.y);
+//    NSLog(@"contentOffset:%f",scrollView.contentOffset.y);
 }
 
 #pragma mark - Table view delegate
