@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		570DF9641E33B6D8005AF920 /* HKScrollingNavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570DF9631E33B6D8005AF920 /* HKScrollingNavBarViewController.m */; };
+		570DF96B1E33B733005AF920 /* HKScrollingNavAndTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570DF9661E33B733005AF920 /* HKScrollingNavAndTabBarViewController.m */; };
+		570DF96C1E33B733005AF920 /* HKScrollingNavAndToolbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570DF9681E33B733005AF920 /* HKScrollingNavAndToolbarViewController.m */; };
+		570DF96D1E33B733005AF920 /* HKScrollingTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570DF96A1E33B733005AF920 /* HKScrollingTabBarViewController.m */; };
 		57D702711E2BA4210014E62A /* UIViewController+HKScrollingNavAndTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 57D702701E2BA4210014E62A /* UIViewController+HKScrollingNavAndTabBar.m */; };
 		57DF8D151E2527C1000CFC45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 57DF8D141E2527C1000CFC45 /* main.m */; };
 		57DF8D181E2527C1000CFC45 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 57DF8D171E2527C1000CFC45 /* AppDelegate.m */; };
@@ -17,6 +21,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		570DF9621E33B6D8005AF920 /* HKScrollingNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingNavBarViewController.h; sourceTree = "<group>"; };
+		570DF9631E33B6D8005AF920 /* HKScrollingNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingNavBarViewController.m; sourceTree = "<group>"; };
+		570DF9651E33B733005AF920 /* HKScrollingNavAndTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingNavAndTabBarViewController.h; sourceTree = "<group>"; };
+		570DF9661E33B733005AF920 /* HKScrollingNavAndTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingNavAndTabBarViewController.m; sourceTree = "<group>"; };
+		570DF9671E33B733005AF920 /* HKScrollingNavAndToolbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingNavAndToolbarViewController.h; sourceTree = "<group>"; };
+		570DF9681E33B733005AF920 /* HKScrollingNavAndToolbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingNavAndToolbarViewController.m; sourceTree = "<group>"; };
+		570DF9691E33B733005AF920 /* HKScrollingTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingTabBarViewController.h; sourceTree = "<group>"; };
+		570DF96A1E33B733005AF920 /* HKScrollingTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingTabBarViewController.m; sourceTree = "<group>"; };
 		57D7026F1E2BA4210014E62A /* UIViewController+HKScrollingNavAndTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HKScrollingNavAndTabBar.h"; sourceTree = "<group>"; };
 		57D702701E2BA4210014E62A /* UIViewController+HKScrollingNavAndTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HKScrollingNavAndTabBar.m"; sourceTree = "<group>"; };
 		57DF8D101E2527C1000CFC45 /* HKScrollingNavAndTabBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HKScrollingNavAndTabBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +79,14 @@
 				57DF8D171E2527C1000CFC45 /* AppDelegate.m */,
 				57DF8D191E2527C1000CFC45 /* ViewController.h */,
 				57DF8D1A1E2527C1000CFC45 /* ViewController.m */,
+				570DF9621E33B6D8005AF920 /* HKScrollingNavBarViewController.h */,
+				570DF9631E33B6D8005AF920 /* HKScrollingNavBarViewController.m */,
+				570DF9651E33B733005AF920 /* HKScrollingNavAndTabBarViewController.h */,
+				570DF9661E33B733005AF920 /* HKScrollingNavAndTabBarViewController.m */,
+				570DF9671E33B733005AF920 /* HKScrollingNavAndToolbarViewController.h */,
+				570DF9681E33B733005AF920 /* HKScrollingNavAndToolbarViewController.m */,
+				570DF9691E33B733005AF920 /* HKScrollingTabBarViewController.h */,
+				570DF96A1E33B733005AF920 /* HKScrollingTabBarViewController.m */,
 				57DF8D1F1E2527C1000CFC45 /* Assets.xcassets */,
 				57DF8D211E2527C1000CFC45 /* LaunchScreen.storyboard */,
 				57DF8D241E2527C1000CFC45 /* Info.plist */,
@@ -170,6 +190,10 @@
 				57DF8D301E252913000CFC45 /* UIView+HKScrollingNavAndBar.m in Sources */,
 				57DF8D181E2527C1000CFC45 /* AppDelegate.m in Sources */,
 				57DF8D151E2527C1000CFC45 /* main.m in Sources */,
+				570DF96D1E33B733005AF920 /* HKScrollingTabBarViewController.m in Sources */,
+				570DF96C1E33B733005AF920 /* HKScrollingNavAndToolbarViewController.m in Sources */,
+				570DF9641E33B6D8005AF920 /* HKScrollingNavBarViewController.m in Sources */,
+				570DF96B1E33B733005AF920 /* HKScrollingNavAndTabBarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

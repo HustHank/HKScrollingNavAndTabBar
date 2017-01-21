@@ -12,7 +12,7 @@
 
 @interface UIViewController () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, weak)   UIView *hk_scrollableView;
+@property (nonatomic, weak) UIView *hk_scrollableView;
 @property (nonatomic, weak) UIView *hk_topBar;
 @property (nonatomic, weak) UIView *hk_bottomBar;
 

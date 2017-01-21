@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 
+//导航栏颜色
+#define NavBarColor [UIColor colorWithRed:64/255.0 green:224/255.0 blue:208/255.0 alpha:1.0]
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) UITabBarController *tabBarController;
@@ -19,43 +22,18 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:NavBarColor];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] init];
-    self.tabBarController = [[UITabBarController alloc] init];
-    [self setUpAllChildVc];
-    self.window.rootViewController = self.tabBarController;
+    ViewController *viewController = [[ViewController alloc] init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     return YES;
-}
-
-#pragma mark - setup
-- (void)setUpAllChildVc {
-    ViewController *Vc = [[ViewController alloc] init];
-    [self setupOneChildVcWithVc:Vc image:@"" selectedImage:@"" title:@"首页"];
-}
-
-- (void)setupOneChildVcWithVc:(UIViewController *)Vc image:(NSString *)image selectedImage:(NSString *)selectedImage title:(NSString *)title {
-    
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:Vc];
-    
-    UIImage *myImage = [UIImage imageNamed:image];
-    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    //tabBarItem，是系统提供模型，专门负责tabbar上按钮的文字以及图片展示
-    Vc.tabBarItem.image = myImage;
-    
-    UIImage *mySelectedImage = [UIImage imageNamed:selectedImage];
-    mySelectedImage = [mySelectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
-    Vc.tabBarItem.selectedImage = mySelectedImage;
-    Vc.tabBarItem.title = title;
-    Vc.navigationItem.title = title;
-    
-    //设置图片居中，这里的4.5，根据实际中间按钮图片大小来决定
-    Vc.tabBarItem.imageInsets = UIEdgeInsetsMake(4.5, 0, -4.5, 0);
-    //设置不显示文字，将title的位置设置成无限远，就看不到了
-    Vc.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, MAXFLOAT);
-    
-    [self.tabBarController addChildViewController:nav];
 }
 
 @end
