@@ -11,9 +11,11 @@
 
 static NSString * const kCellIdentifier = @"HKScrollingNavAndToolbarTableViewCellIdentifier";
 
-@interface HKScrollingNavAndToolbarViewController ()
+@interface HKScrollingNavAndToolbarViewController () <UITableViewDataSource,UITableViewDelegate>
 
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) UIToolbar *toolbar;
 
 @end
 
@@ -22,7 +24,9 @@ static NSString * const kCellIdentifier = @"HKScrollingNavAndToolbarTableViewCel
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
+    [self.view addSubview:self.tableView];
+    [self.view addSubview:self.toolbar];
     self.dataSource = @[].mutableCopy;
     for (NSInteger index = 0; index < 50; index++) {
         [self.dataSource addObject:@"text"];
@@ -31,6 +35,7 @@ static NSString * const kCellIdentifier = @"HKScrollingNavAndToolbarTableViewCel
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
     
     [self hk_followScrollView:self.tableView];
+    [self hk_managerBotomBar:self.toolbar];
     self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionTop;
     [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
         NSLog(@"state:%ld",(long)state);
@@ -51,6 +56,26 @@ static NSString * const kCellIdentifier = @"HKScrollingNavAndToolbarTableViewCel
 
 - (void)dealloc {
     [self hk_stopFollowingScrollView];
+}
+
+#pragma mark - Getter
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+    }
+    return _tableView;
+}
+
+- (UIToolbar *)toolbar {
+    if (!_toolbar) {
+        _toolbar = [[UIToolbar alloc] init];
+        _toolbar.frame = CGRectMake(0, CGRectGetMaxY(self.view.frame) - 50, CGRectGetWidth(self.view.frame), 50);
+        _toolbar.backgroundColor = [UIColor lightGrayColor];
+    }
+    return _toolbar;
 }
 
 #pragma mark - Table view data source

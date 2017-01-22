@@ -12,9 +12,9 @@
 
 @interface UIViewController () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, weak) UIView *hk_scrollableView;
-@property (nonatomic, weak) UIView *hk_topBar;
-@property (nonatomic, weak) UIView *hk_bottomBar;
+@property (nonatomic, strong) UIView *hk_scrollableView;
+@property (nonatomic, strong) UIView *hk_topBar;
+@property (nonatomic, strong) UIView *hk_bottomBar;
 
 @property (nonatomic, strong) UIPanGestureRecognizer *hk_panGesture;
 
@@ -31,12 +31,12 @@
 
 - (void)hk_followScrollView:(UIView *)scrollableView {
     self.hk_scrollableView = scrollableView;
-    self.hk_topBar = self.navigationController.navigationBar;
+    [self hk_managerTopBar:self.navigationController.navigationBar];
     self.hk_panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(hk_handlePanGesture:)];
     [self.hk_panGesture setMaximumNumberOfTouches:1];
     
     [self.hk_panGesture setDelegate:self];
-    [self.hk_scrollableView  addGestureRecognizer:self.hk_panGesture];
+    [self.hk_scrollableView addGestureRecognizer:self.hk_panGesture];
     self.hk_alphaFadeEnabled = YES;
 }
 
@@ -46,17 +46,20 @@
     
     self.hk_scrollableView = nil;
     self.hk_panGesture = nil;
+    self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionStatusBar;
 }
 
 - (void)hk_managerTopBar:(UIView *)topBar {
     self.hk_topBar = topBar;
     self.hk_topBar.hk_postion = HKScrollingNavAndBarPositionTop;
+    self.hk_topBar.hk_expandedOffsetY = CGRectGetMinY(topBar.frame);
     self.hk_topBar.hk_alphaFadeEnabled = self.hk_alphaFadeEnabled;
 }
 
-- (void)hk_managerbotomBar:(UIView *)bottomBar {
+- (void)hk_managerBotomBar:(UIView *)bottomBar {
     self.hk_bottomBar = bottomBar;
     self.hk_bottomBar.hk_postion = HKScrollingNavAndBarPositionBottom;
+    self.hk_bottomBar.hk_expandedOffsetY = CGRectGetMinY(bottomBar.frame);
     self.hk_bottomBar.hk_alphaFadeEnabled = self.hk_alphaFadeEnabled;
     self.hk_bottomBar.hk_extraDistance = [self hk_exceededDistanceOfBottomBar];
 }
@@ -224,7 +227,7 @@
     
     if (self.hk_bottomBar) {
         CGFloat tabBarMinY = CGRectGetMinY(self.hk_bottomBar.frame);
-        scrollViewInset.bottom = MAX(0, [self hk_screenHeight] - tabBarMinY);
+        scrollViewInset.bottom = MAX(0, [self.hk_bottomBar hk_contractedOffsetY] - tabBarMinY);
     }
     
     self.hk_scrollView.contentInset = scrollViewInset;
@@ -294,15 +297,15 @@
 #pragma mark - Setters
 
 - (void)setHk_scrollableView:(UIView *)hk_scrollableView {
-    objc_setAssociatedObject(self, @selector(hk_scrollableView), hk_scrollableView, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(hk_scrollableView), hk_scrollableView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)setHk_topBar:(UIView *)hk_topBar {
-    objc_setAssociatedObject(self, @selector(hk_topBar), hk_topBar, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(hk_topBar), hk_topBar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)setHk_bottomBar:(UIView *)hk_bottomBar {
-    objc_setAssociatedObject(self, @selector(hk_bottomBar), hk_bottomBar, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, @selector(hk_bottomBar), hk_bottomBar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)setHk_panGesture:(UIPanGestureRecognizer *)hk_panGesture {
@@ -319,9 +322,9 @@
 
 - (void)setHk_topBarContracedPostion:(HKScrollingTopBarContractedPosition)hk_topBarContracedPostion {
     if (HKScrollingTopBarContractedPositionStatusBar == hk_topBarContracedPostion) {
-        self.hk_topBar.hk_extraDistance = [self hk_statusBarHeight];
-    } else {
         self.hk_topBar.hk_extraDistance = 0;
+    } else {
+        self.hk_topBar.hk_extraDistance = [self hk_statusBarHeight];
     }
     
     objc_setAssociatedObject(self, @selector(hk_topBarContracedPostion), @(hk_topBarContracedPostion), OBJC_ASSOCIATION_RETAIN_NONATOMIC);

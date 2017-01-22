@@ -21,12 +21,13 @@ typedef NS_ENUM(NSUInteger, HKScrollingNavAndTabBarState) {
 
 /** TopBar收起时停留位置 */
 typedef NS_ENUM(NSUInteger, HKScrollingTopBarContractedPosition) {
-    /** 停留在顶端,默认位置 */
-    HKScrollingTopBarContractedPositionTop = 0,
-    /** 停留在状态栏处 */
-    HKScrollingTopBarContractedPositionStatusBar,
+    /** 停留在状态栏处，默认位置 */
+    HKScrollingTopBarContractedPositionStatusBar = 0,
+    /** 停留在顶端 */
+    HKScrollingTopBarContractedPositionTop,
 };
 
+/** Bar状态改变回调Block */
 typedef void(^HKScrollingBarDidChangeBlock)(HKScrollingNavAndTabBarState barState);
 
 @interface UIViewController (HKScrollingNavAndTabBar)
@@ -46,7 +47,7 @@ typedef void(^HKScrollingBarDidChangeBlock)(HKScrollingNavAndTabBarState barStat
 - (void)hk_managerTopBar:(UIView *)topBar;
 
 /** 设置底部Bar */
-- (void)hk_managerbotomBar:(UIView *)bottomBar;
+- (void)hk_managerBotomBar:(UIView *)bottomBar;
 
 /** 手动展开Bar */
 - (void)hk_expand;

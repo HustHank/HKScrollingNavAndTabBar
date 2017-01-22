@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HKScrollingNavAndTabBarViewController : UITabBarController
+@interface HKScrollingNavAndTabBarViewController : UIViewController
 
 @end

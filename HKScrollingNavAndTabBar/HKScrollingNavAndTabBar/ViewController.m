@@ -38,7 +38,6 @@ static NSString * const kCellIdentifier = @"HKTableViewCellIdentifier";
 - (void)initDataSource {
     self.dataSource = @[
                         @"HKScrollingNavBarViewController",
-                        @"HKScrollingTabBarViewController",
                         @"HKScrollingNavAndTabBarViewController",
                         @"HKScrollingNavAndToolbarViewController",
                         ];
@@ -77,7 +76,17 @@ static NSString * const kCellIdentifier = @"HKTableViewCellIdentifier";
     NSString *className = self.dataSource[indexPath.row];
     Class ControllerClass = NSClassFromString(className);
     UIViewController *classcontroller = [[ControllerClass alloc] init];
-    [self.navigationController pushViewController:classcontroller animated:YES];
+    if ([className containsString:@"NavAndTab"]) {
+        
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:classcontroller];
+        UITabBarController *tabBarController = [[UITabBarController alloc] init];
+        tabBarController.viewControllers = @[nav];
+        [self presentViewController:tabBarController animated:YES completion:^{
+            
+        }];
+    } else {
+        [self.navigationController pushViewController:classcontroller animated:YES];
+    }
 }
 
 

@@ -11,8 +11,9 @@
 
 static NSString * const kCellIdentifier = @"HKScrollingNavBarTableViewCellIdentifier";
 
-@interface HKScrollingNavBarViewController ()
+@interface HKScrollingNavBarViewController () <UITableViewDataSource,UITableViewDelegate>
 
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end
@@ -23,6 +24,7 @@ static NSString * const kCellIdentifier = @"HKScrollingNavBarTableViewCellIdenti
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self.view addSubview:self.tableView];
     self.dataSource = @[].mutableCopy;
     for (NSInteger index = 0; index < 50; index++) {
         [self.dataSource addObject:@"text"];
@@ -31,7 +33,9 @@ static NSString * const kCellIdentifier = @"HKScrollingNavBarTableViewCellIdenti
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
     
     [self hk_followScrollView:self.tableView];
-    self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionTop;
+    self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionStatusBar;
+    [self hk_managerTopBar:self.navigationController.navigationBar];
+    [self hk_managerBotomBar:self.tabBarController.tabBar];
     [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
         NSLog(@"state:%ld",(long)state);
     }];
@@ -52,6 +56,15 @@ static NSString * const kCellIdentifier = @"HKScrollingNavBarTableViewCellIdenti
 
 - (void)dealloc {
     [self hk_stopFollowingScrollView];
+}
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+    }
+    return _tableView;
 }
 
 #pragma mark - Table view data source
