@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HKScrollingSegmentedViewController.h"
 
-@interface HKScrollingNavAndToolbarViewController : UIViewController
+@interface HKScrollingNavAndToolbarViewController : HKScrollingSegmentedViewController
 
 @end

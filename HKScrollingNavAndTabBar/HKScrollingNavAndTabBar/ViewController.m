@@ -77,7 +77,7 @@ static NSString * const kCellIdentifier = @"HKTableViewCellIdentifier";
     Class ControllerClass = NSClassFromString(className);
     UIViewController *classcontroller = [[ControllerClass alloc] init];
     if ([className containsString:@"NavAndTab"]) {
-        
+        classcontroller.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:0];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:classcontroller];
         UITabBarController *tabBarController = [[UITabBarController alloc] init];
         tabBarController.viewControllers = @[nav];

@@ -93,7 +93,7 @@
     self.frame = viewFrame;
     
     if (self.hk_alphaFadeEnabled) {
-        CGFloat alpha = (currentViewY - [self hk_viewMinY]) * 1.0f / ([self hk_ViewMaxY] - [self hk_viewMinY]);
+        CGFloat alpha = 1 - fabs(currentViewY - self.hk_expandedOffsetY) * 1.0f / ([self hk_ViewMaxY] - [self hk_viewMinY]);
         [self hk_updateSubviewsToAlpha:alpha];
         
     } else {

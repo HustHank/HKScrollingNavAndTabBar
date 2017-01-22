@@ -17,6 +17,8 @@
 		57DF8D201E2527C1000CFC45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57DF8D1F1E2527C1000CFC45 /* Assets.xcassets */; };
 		57DF8D231E2527C1000CFC45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57DF8D211E2527C1000CFC45 /* LaunchScreen.storyboard */; };
 		57DF8D301E252913000CFC45 /* UIView+HKScrollingNavAndBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 57DF8D2F1E252913000CFC45 /* UIView+HKScrollingNavAndBar.m */; };
+		57EEE7331E356FEC00FA9251 /* HKScrolingBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7321E356FEC00FA9251 /* HKScrolingBaseViewController.m */; };
+		57EEE7361E3571D100FA9251 /* HKScrollingSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7351E3571D100FA9251 /* HKScrollingSegmentedViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,10 @@
 		57DF8D241E2527C1000CFC45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57DF8D2E1E252913000CFC45 /* UIView+HKScrollingNavAndBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HKScrollingNavAndBar.h"; sourceTree = "<group>"; };
 		57DF8D2F1E252913000CFC45 /* UIView+HKScrollingNavAndBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HKScrollingNavAndBar.m"; sourceTree = "<group>"; };
+		57EEE7311E356FEC00FA9251 /* HKScrolingBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrolingBaseViewController.h; sourceTree = "<group>"; };
+		57EEE7321E356FEC00FA9251 /* HKScrolingBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrolingBaseViewController.m; sourceTree = "<group>"; };
+		57EEE7341E3571D100FA9251 /* HKScrollingSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingSegmentedViewController.h; sourceTree = "<group>"; };
+		57EEE7351E3571D100FA9251 /* HKScrollingSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingSegmentedViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,10 @@
 				57DF8D171E2527C1000CFC45 /* AppDelegate.m */,
 				57DF8D191E2527C1000CFC45 /* ViewController.h */,
 				57DF8D1A1E2527C1000CFC45 /* ViewController.m */,
+				57EEE7311E356FEC00FA9251 /* HKScrolingBaseViewController.h */,
+				57EEE7321E356FEC00FA9251 /* HKScrolingBaseViewController.m */,
+				57EEE7341E3571D100FA9251 /* HKScrollingSegmentedViewController.h */,
+				57EEE7351E3571D100FA9251 /* HKScrollingSegmentedViewController.m */,
 				570DF9621E33B6D8005AF920 /* HKScrollingNavBarViewController.h */,
 				570DF9631E33B6D8005AF920 /* HKScrollingNavBarViewController.m */,
 				570DF9651E33B733005AF920 /* HKScrollingNavAndTabBarViewController.h */,
@@ -181,6 +191,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				57D702711E2BA4210014E62A /* UIViewController+HKScrollingNavAndTabBar.m in Sources */,
+				57EEE7331E356FEC00FA9251 /* HKScrolingBaseViewController.m in Sources */,
+				57EEE7361E3571D100FA9251 /* HKScrollingSegmentedViewController.m in Sources */,
 				57DF8D1B1E2527C1000CFC45 /* ViewController.m in Sources */,
 				57DF8D301E252913000CFC45 /* UIView+HKScrollingNavAndBar.m in Sources */,
 				57DF8D181E2527C1000CFC45 /* AppDelegate.m in Sources */,

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HKScrolingBaseViewController.h"
 
-@interface HKScrollingNavBarViewController : UIViewController
+@interface HKScrollingNavBarViewController : HKScrolingBaseViewController
 
 @end

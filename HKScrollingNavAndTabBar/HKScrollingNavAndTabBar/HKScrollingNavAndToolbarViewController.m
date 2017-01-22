@@ -9,12 +9,10 @@
 #import "HKScrollingNavAndToolbarViewController.h"
 #import "UIViewController+HKScrollingNavAndTabBar.h"
 
-static NSString * const kCellIdentifier = @"HKScrollingNavAndToolbarTableViewCellIdentifier";
+static const CGFloat kToolbarHeight = 50.f;
 
-@interface HKScrollingNavAndToolbarViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface HKScrollingNavAndToolbarViewController ()
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) UIToolbar *toolbar;
 
 @end
@@ -23,16 +21,8 @@ static NSString * const kCellIdentifier = @"HKScrollingNavAndToolbarTableViewCel
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 
-    [self.view addSubview:self.tableView];
     [self.view addSubview:self.toolbar];
-    self.dataSource = @[].mutableCopy;
-    for (NSInteger index = 0; index < 50; index++) {
-        [self.dataSource addObject:@"text"];
-    }
-    
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
     
     [self hk_followScrollView:self.tableView];
     [self hk_managerBotomBar:self.toolbar];
@@ -40,58 +30,21 @@ static NSString * const kCellIdentifier = @"HKScrollingNavAndToolbarTableViewCel
     [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
         NSLog(@"state:%ld",(long)state);
     }];
-    
-    [self.tableView reloadData];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self hk_expand];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self hk_expand];
-}
-
-- (void)dealloc {
-    [self hk_stopFollowingScrollView];
-}
-
-#pragma mark - Getter
-
-- (UITableView *)tableView {
-    if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
-    }
-    return _tableView;
-}
+#pragma mark - Getters
 
 - (UIToolbar *)toolbar {
     if (!_toolbar) {
         _toolbar = [[UIToolbar alloc] init];
-        _toolbar.frame = CGRectMake(0, CGRectGetMaxY(self.view.frame) - 50, CGRectGetWidth(self.view.frame), 50);
-        _toolbar.backgroundColor = [UIColor lightGrayColor];
+        _toolbar.frame = CGRectMake(0, CGRectGetHeight(self.view.frame) - kToolbarHeight, CGRectGetWidth(self.view.frame), kToolbarHeight);
+        UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
+        UIBarButtonItem *flexibleSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        UIBarButtonItem *bookmarkItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:nil action:nil];
+        _toolbar.items = @[addItem,flexibleSpaceItem,bookmarkItem];
+        _toolbar.backgroundColor = [UIColor orangeColor];
     }
     return _toolbar;
-}
-
-#pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = self.dataSource[indexPath.row];
-    
-    return cell;
 }
 
 @end
