@@ -7,11 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "HKTabBar.h"
 
 static NSString * const kCellIdentifier = @"HKTableViewCellIdentifier";
 static NSString * const kTitle = @"title";
 static NSString * const kClassName = @"className";
 static NSString * const kSwitchType = @"switchType";
+static NSString * const kTabBarType = @"tabBarType";
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -49,14 +51,21 @@ static NSString * const kSwitchType = @"switchType";
                                   kTitle:@"Scroling Nav and Tab",
                                   kClassName:@"HKScrollingNavAndTabBarViewController",
                                   kSwitchType:@"present",
+                                  kTabBarType:@"default",
                                   };
     NSDictionary *thirdVcDict = @{
                                   kTitle:@"Scroling Nav and Toolbar",
                                   kClassName:@"HKScrollingNavAndToolbarViewController",
                                   kSwitchType:@"push",
                                   };
+    NSDictionary *forthVcDict = @{
+                                  kTitle:@"Scroling Nav and exceed Tab",
+                                  kClassName:@"HKScrollingNavAndExceedTabBarViewController",
+                                  kSwitchType:@"present",
+                                  kTabBarType:@"custom",
+                                  };
     
-    self.dataSource = @[firstVcDict,secondVcDict,thirdVcDict];
+    self.dataSource = @[firstVcDict,secondVcDict,thirdVcDict,forthVcDict];
     [self.tableView reloadData];
 }
 
@@ -92,16 +101,29 @@ static NSString * const kSwitchType = @"switchType";
     
     NSDictionary *vcDict = self.dataSource[indexPath.row];
     Class ControllerClass = NSClassFromString(vcDict[kClassName]);
-    UIViewController *classcontroller = [[ControllerClass alloc] init];
     if ([vcDict[kSwitchType] isEqualToString:@"present"]) {
         
-        classcontroller.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:0];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:classcontroller];
+        UIViewController *leftViewController = [[ControllerClass alloc] init];
+        leftViewController.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:0];
+        UINavigationController *leftNavigationController = [[UINavigationController alloc] initWithRootViewController:leftViewController];
+        
+        UIViewController *rightViewController = [[ViewController alloc] init];
+        rightViewController.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:1];
+        UINavigationController *rightNavigationController = [[UINavigationController alloc] initWithRootViewController:rightViewController];
+        
         UITabBarController *tabBarController = [[UITabBarController alloc] init];
-        tabBarController.viewControllers = @[nav];
+        tabBarController.viewControllers = @[leftNavigationController,rightNavigationController];
+        
+        //TabBar包含突出按钮
+        if ([vcDict[kTabBarType] isEqualToString:@"custom"]) {
+            HKTabBar *tabBar = [[HKTabBar alloc] init];
+            [tabBarController setValue:tabBar forKeyPath:@"tabBar"];
+        }
+
         [self presentViewController:tabBarController animated:YES completion:nil];
         
     } else {
+        UIViewController *classcontroller = [[ControllerClass alloc] init];
         [self.navigationController pushViewController:classcontroller animated:YES];
     }
 }
