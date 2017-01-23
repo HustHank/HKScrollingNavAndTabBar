@@ -26,7 +26,8 @@ static NSString * const kCellIdentifier = @"HKScrollingBaseTableViewCellIdentifi
     
     self.dataSource = @[].mutableCopy;
     for (NSInteger index = 0; index < 50; index++) {
-        [self.dataSource addObject:@"text"];
+        NSString *text = [NSString stringWithFormat:@"Row %ld text",(long)index];
+        [self.dataSource addObject:text];
     }
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
