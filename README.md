@@ -20,6 +20,8 @@ Support function:
 - Control hiding/showing separately
 - Alpha fade when scrolling
 - Set UINavigationBar position when UINavigationBar hidden
+- Scrolling state change block
+- Works with ARC and iOS >= 8
 
 ###Support functions
 ![Alt text]
