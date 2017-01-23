@@ -23,17 +23,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:NavBarColor];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self setupNavigationBar];
     
-    // Override point for customization after application launch.
     self.window = [[UIWindow alloc] init];
     ViewController *viewController = [[ViewController alloc] init];
+    viewController.title = @"Home";
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)setupNavigationBar {
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+    attributes[NSFontAttributeName] = [UIFont systemFontOfSize:18.f];
+    attributes[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:attributes];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarTintColor:NavBarColor];
 }
 
 @end

@@ -9,6 +9,9 @@
 #import "ViewController.h"
 
 static NSString * const kCellIdentifier = @"HKTableViewCellIdentifier";
+static NSString * const kTitle = @"title";
+static NSString * const kClassName = @"className";
+static NSString * const kSwitchType = @"switchType";
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -36,11 +39,24 @@ static NSString * const kCellIdentifier = @"HKTableViewCellIdentifier";
 }
 
 - (void)initDataSource {
-    self.dataSource = @[
-                        @"HKScrollingNavBarViewController",
-                        @"HKScrollingNavAndTabBarViewController",
-                        @"HKScrollingNavAndToolbarViewController",
-                        ];
+    
+    NSDictionary *firstVcDict = @{
+                                  kTitle:@"Scroling Nav",
+                                  kClassName:@"HKScrollingNavBarViewController",
+                                  kSwitchType:@"push",
+                                  };
+    NSDictionary *secondVcDict = @{
+                                  kTitle:@"Scroling Nav and Tab",
+                                  kClassName:@"HKScrollingNavAndTabBarViewController",
+                                  kSwitchType:@"present",
+                                  };
+    NSDictionary *thirdVcDict = @{
+                                  kTitle:@"Scroling Nav and Toolbar",
+                                  kClassName:@"HKScrollingNavAndToolbarViewController",
+                                  kSwitchType:@"push",
+                                  };
+    
+    self.dataSource = @[firstVcDict,secondVcDict,thirdVcDict];
     [self.tableView reloadData];
 }
 
@@ -65,7 +81,8 @@ static NSString * const kCellIdentifier = @"HKTableViewCellIdentifier";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = self.dataSource[indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.textLabel.text = self.dataSource[indexPath.row][kTitle];
     
     return cell;
 }
@@ -73,21 +90,20 @@ static NSString * const kCellIdentifier = @"HKTableViewCellIdentifier";
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *className = self.dataSource[indexPath.row];
-    Class ControllerClass = NSClassFromString(className);
+    NSDictionary *vcDict = self.dataSource[indexPath.row];
+    Class ControllerClass = NSClassFromString(vcDict[kClassName]);
     UIViewController *classcontroller = [[ControllerClass alloc] init];
-    if ([className containsString:@"NavAndTab"]) {
+    if ([vcDict[kSwitchType] isEqualToString:@"present"]) {
+        
         classcontroller.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFeatured tag:0];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:classcontroller];
         UITabBarController *tabBarController = [[UITabBarController alloc] init];
         tabBarController.viewControllers = @[nav];
-        [self presentViewController:tabBarController animated:YES completion:^{
-            
-        }];
+        [self presentViewController:tabBarController animated:YES completion:nil];
+        
     } else {
         [self.navigationController pushViewController:classcontroller animated:YES];
     }
 }
-
 
 @end

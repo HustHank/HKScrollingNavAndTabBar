@@ -9,7 +9,7 @@
 #import "HKScrolingBaseViewController.h"
 #import "UIViewController+HKScrollingNavAndTabBar.h"
 
-static NSString * const kCellIdentifier = @"HKScrollingNavAndTabBarViewControllerTableViewCellIdentifier";
+static NSString * const kCellIdentifier = @"HKScrollingBaseTableViewCellIdentifier";
 
 #pragma mark -
 
