@@ -10,47 +10,6 @@
 #import "UIViewController+HKScrollingNavAndTabBar.h"
 
 static NSString * const kCellIdentifier = @"HKScrollingNavAndTabBarViewControllerTableViewCellIdentifier";
-static NSString * const kTopBarPostionControlCellIdentifier = @"HKScrollingNavAndTabBarViewControllerTableViewCellTopBarPostionControlCellIdentifier";
-static NSString * const kAlphaControlCellIdentifier = @"HKScrollingNavAndTabBarViewControllerTableViewCellAlphaControlCellIdentifier";
-
-typedef void(^HKScrolingSwitchTableViewCellBlock)(UISwitch *switchControl);
-
-#pragma mark -
-
-@interface HKScrolingSwitchTableViewCell : UITableViewCell
-
-@property (nonatomic, strong) UISwitch *topBarPositionSwitch;
-@property (nonatomic, copy) HKScrolingSwitchTableViewCellBlock switchBlock;
-
-@end
-
-@implementation HKScrolingSwitchTableViewCell
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _topBarPositionSwitch = [[UISwitch alloc] init];
-        _topBarPositionSwitch.on = YES;
-        [_topBarPositionSwitch addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
-        [self addSubview:_topBarPositionSwitch];
-        [self bringSubviewToFront:_topBarPositionSwitch];
-    }
-    return self;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    _topBarPositionSwitch.frame = CGRectMake(CGRectGetWidth(self.frame) - 100,  0, 80, 30);
-    _topBarPositionSwitch.center = CGPointMake(_topBarPositionSwitch.center.x, self.center.y);
-}
-
-- (void)switchChange:(UISwitch *)switchControl {
-    if (self.switchBlock) {
-        self.switchBlock(switchControl);
-    }
-}
-
-@end
 
 #pragma mark -
 
@@ -71,8 +30,6 @@ typedef void(^HKScrolingSwitchTableViewCellBlock)(UISwitch *switchControl);
     }
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
-    [self.tableView registerClass:[HKScrolingSwitchTableViewCell class] forCellReuseIdentifier:kTopBarPostionControlCellIdentifier];
-    [self.tableView registerClass:[HKScrolingSwitchTableViewCell class] forCellReuseIdentifier:kAlphaControlCellIdentifier];
     [self.tableView reloadData];
 }
 
@@ -111,42 +68,9 @@ typedef void(^HKScrolingSwitchTableViewCellBlock)(UISwitch *switchControl);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellIdentifier = kCellIdentifier;
-    
-    if (0 == indexPath.row) {
-        cellIdentifier = kTopBarPostionControlCellIdentifier;
-        HKScrolingSwitchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-        cell.textLabel.text = @"alpha enable";
-        cell.switchBlock = ^(UISwitch *switchControl) {
-            if (switchControl.on) {
-                self.hk_alphaFadeEnabled = YES;
-            } else {
-                self.hk_alphaFadeEnabled = NO;
-            }
-        };
-        return cell;
-        
-    } else if (1 == indexPath.row) {
-        cellIdentifier = kAlphaControlCellIdentifier;
-        HKScrolingSwitchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-        cell.textLabel.text = self.dataSource[indexPath.row];
-        cell.switchBlock = ^(UISwitch *switchControl) {
-            if (switchControl.on) {
-                self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionStatusBar;
-            } else {
-                self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionTop;
-            }
-        };
-        return cell;
-        
-    } else {
-        cellIdentifier = kCellIdentifier;
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-        cell.textLabel.text = self.dataSource[indexPath.row];
-        return cell;
-    }
-    
-//    return [UITableViewCell new];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+    cell.textLabel.text = self.dataSource[indexPath.row];
+    return cell;
 }
 
 @end
