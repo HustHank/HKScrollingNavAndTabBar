@@ -79,4 +79,5 @@ Below code is an example of how your UIViewController subclass should look:
 }
 ```
 
-Note: HidingNavigationBar only works with UINavigationBars that have translucent set to true.
+#Note
+HKScrollingNavAndTabBar only works with UINavigationBars that have translucent set to YES.
