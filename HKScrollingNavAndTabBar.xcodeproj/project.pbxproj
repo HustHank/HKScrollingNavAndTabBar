@@ -1,0 +1,430 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		57EEE7681E365FF600FA9251 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7671E365FF600FA9251 /* main.m */; };
+		57EEE7871E36600000FA9251 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE76A1E36600000FA9251 /* AppDelegate.m */; };
+		57EEE7881E36600000FA9251 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57EEE76B1E36600000FA9251 /* Assets.xcassets */; };
+		57EEE7891E36600000FA9251 /* HKScrolingBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE76E1E36600000FA9251 /* HKScrolingBaseViewController.m */; };
+		57EEE78A1E36600000FA9251 /* HKScrollingSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7701E36600000FA9251 /* HKScrollingSegmentedViewController.m */; };
+		57EEE78B1E36600000FA9251 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57EEE7721E36600000FA9251 /* LaunchScreen.storyboard */; };
+		57EEE78C1E36600000FA9251 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57EEE7741E36600000FA9251 /* Info.plist */; };
+		57EEE78D1E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7771E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.m */; };
+		57EEE78E1E36600000FA9251 /* HKScrollingNavAndTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7791E36600000FA9251 /* HKScrollingNavAndTabBarViewController.m */; };
+		57EEE78F1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE77C1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.m */; };
+		57EEE7901E36600000FA9251 /* HKScrollingNavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE77F1E36600000FA9251 /* HKScrollingNavBarViewController.m */; };
+		57EEE7911E36600000FA9251 /* HKTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7821E36600000FA9251 /* HKTabBar.m */; };
+		57EEE7921E36600000FA9251 /* UIView+HKExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7841E36600000FA9251 /* UIView+HKExtension.m */; };
+		57EEE7931E36600000FA9251 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7861E36600000FA9251 /* ViewController.m */; };
+		57F9256C1E36618000B085FF /* UIView+HKScrollingNavAndBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F925691E36618000B085FF /* UIView+HKScrollingNavAndBar.m */; };
+		57F9256D1E36618000B085FF /* UIViewController+HKScrollingNavAndTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F9256B1E36618000B085FF /* UIViewController+HKScrollingNavAndTabBar.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		57DF8D101E2527C1000CFC45 /* HKScrollingNavAndTabBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HKScrollingNavAndTabBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		57EEE7671E365FF600FA9251 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = HKScrollingNavAndTabBarExample/main.m; sourceTree = SOURCE_ROOT; };
+		57EEE7691E36600000FA9251 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = HKScrollingNavAndTabBarExample/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		57EEE76A1E36600000FA9251 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = HKScrollingNavAndTabBarExample/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		57EEE76B1E36600000FA9251 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = HKScrollingNavAndTabBarExample/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		57EEE76D1E36600000FA9251 /* HKScrolingBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrolingBaseViewController.h; sourceTree = "<group>"; };
+		57EEE76E1E36600000FA9251 /* HKScrolingBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrolingBaseViewController.m; sourceTree = "<group>"; };
+		57EEE76F1E36600000FA9251 /* HKScrollingSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingSegmentedViewController.h; sourceTree = "<group>"; };
+		57EEE7701E36600000FA9251 /* HKScrollingSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingSegmentedViewController.m; sourceTree = "<group>"; };
+		57EEE7731E36600000FA9251 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		57EEE7741E36600000FA9251 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HKScrollingNavAndTabBarExample/Info.plist; sourceTree = SOURCE_ROOT; };
+		57EEE7761E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingNavAndExceedTabBarViewController.h; sourceTree = "<group>"; };
+		57EEE7771E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingNavAndExceedTabBarViewController.m; sourceTree = "<group>"; };
+		57EEE7781E36600000FA9251 /* HKScrollingNavAndTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingNavAndTabBarViewController.h; sourceTree = "<group>"; };
+		57EEE7791E36600000FA9251 /* HKScrollingNavAndTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingNavAndTabBarViewController.m; sourceTree = "<group>"; };
+		57EEE77B1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingNavAndToolbarViewController.h; sourceTree = "<group>"; };
+		57EEE77C1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingNavAndToolbarViewController.m; sourceTree = "<group>"; };
+		57EEE77E1E36600000FA9251 /* HKScrollingNavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKScrollingNavBarViewController.h; sourceTree = "<group>"; };
+		57EEE77F1E36600000FA9251 /* HKScrollingNavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKScrollingNavBarViewController.m; sourceTree = "<group>"; };
+		57EEE7811E36600000FA9251 /* HKTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKTabBar.h; sourceTree = "<group>"; };
+		57EEE7821E36600000FA9251 /* HKTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKTabBar.m; sourceTree = "<group>"; };
+		57EEE7831E36600000FA9251 /* UIView+HKExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HKExtension.h"; sourceTree = "<group>"; };
+		57EEE7841E36600000FA9251 /* UIView+HKExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HKExtension.m"; sourceTree = "<group>"; };
+		57EEE7851E36600000FA9251 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = HKScrollingNavAndTabBarExample/ViewController.h; sourceTree = SOURCE_ROOT; };
+		57EEE7861E36600000FA9251 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = HKScrollingNavAndTabBarExample/ViewController.m; sourceTree = SOURCE_ROOT; };
+		57F925681E36618000B085FF /* UIView+HKScrollingNavAndBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HKScrollingNavAndBar.h"; sourceTree = "<group>"; };
+		57F925691E36618000B085FF /* UIView+HKScrollingNavAndBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HKScrollingNavAndBar.m"; sourceTree = "<group>"; };
+		57F9256A1E36618000B085FF /* UIViewController+HKScrollingNavAndTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HKScrollingNavAndTabBar.h"; sourceTree = "<group>"; };
+		57F9256B1E36618000B085FF /* UIViewController+HKScrollingNavAndTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HKScrollingNavAndTabBar.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		57DF8D0D1E2527C1000CFC45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		57DF8D071E2527C1000CFC45 = {
+			isa = PBXGroup;
+			children = (
+				57DF8D121E2527C1000CFC45 /* HKScrollingNavAndTabBar */,
+				57DF8D111E2527C1000CFC45 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		57DF8D111E2527C1000CFC45 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57DF8D101E2527C1000CFC45 /* HKScrollingNavAndTabBar.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		57DF8D121E2527C1000CFC45 /* HKScrollingNavAndTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				57F925671E36618000B085FF /* HKScrollingNavAndTabBar */,
+				57EEE76C1E36600000FA9251 /* Base */,
+				57EEE7751E36600000FA9251 /* NavAndTab */,
+				57EEE77A1E36600000FA9251 /* NavAndToolbar */,
+				57EEE77D1E36600000FA9251 /* NavBarOnly */,
+				57EEE7801E36600000FA9251 /* TabBar */,
+				57EEE7691E36600000FA9251 /* AppDelegate.h */,
+				57EEE76A1E36600000FA9251 /* AppDelegate.m */,
+				57EEE7851E36600000FA9251 /* ViewController.h */,
+				57EEE7861E36600000FA9251 /* ViewController.m */,
+				57EEE7711E36600000FA9251 /* Base.lproj */,
+				57EEE76B1E36600000FA9251 /* Assets.xcassets */,
+				57EEE7741E36600000FA9251 /* Info.plist */,
+				57DF8D131E2527C1000CFC45 /* Supporting Files */,
+			);
+			path = HKScrollingNavAndTabBar;
+			sourceTree = "<group>";
+		};
+		57DF8D131E2527C1000CFC45 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				57EEE7671E365FF600FA9251 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		57EEE76C1E36600000FA9251 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				57EEE76D1E36600000FA9251 /* HKScrolingBaseViewController.h */,
+				57EEE76E1E36600000FA9251 /* HKScrolingBaseViewController.m */,
+				57EEE76F1E36600000FA9251 /* HKScrollingSegmentedViewController.h */,
+				57EEE7701E36600000FA9251 /* HKScrollingSegmentedViewController.m */,
+			);
+			name = Base;
+			path = HKScrollingNavAndTabBarExample/Base;
+			sourceTree = SOURCE_ROOT;
+		};
+		57EEE7711E36600000FA9251 /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				57EEE7721E36600000FA9251 /* LaunchScreen.storyboard */,
+			);
+			name = Base.lproj;
+			path = HKScrollingNavAndTabBarExample/Base.lproj;
+			sourceTree = SOURCE_ROOT;
+		};
+		57EEE7751E36600000FA9251 /* NavAndTab */ = {
+			isa = PBXGroup;
+			children = (
+				57EEE7761E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.h */,
+				57EEE7771E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.m */,
+				57EEE7781E36600000FA9251 /* HKScrollingNavAndTabBarViewController.h */,
+				57EEE7791E36600000FA9251 /* HKScrollingNavAndTabBarViewController.m */,
+			);
+			name = NavAndTab;
+			path = HKScrollingNavAndTabBarExample/NavAndTab;
+			sourceTree = SOURCE_ROOT;
+		};
+		57EEE77A1E36600000FA9251 /* NavAndToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				57EEE77B1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.h */,
+				57EEE77C1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.m */,
+			);
+			name = NavAndToolbar;
+			path = HKScrollingNavAndTabBarExample/NavAndToolbar;
+			sourceTree = SOURCE_ROOT;
+		};
+		57EEE77D1E36600000FA9251 /* NavBarOnly */ = {
+			isa = PBXGroup;
+			children = (
+				57EEE77E1E36600000FA9251 /* HKScrollingNavBarViewController.h */,
+				57EEE77F1E36600000FA9251 /* HKScrollingNavBarViewController.m */,
+			);
+			name = NavBarOnly;
+			path = HKScrollingNavAndTabBarExample/NavBarOnly;
+			sourceTree = SOURCE_ROOT;
+		};
+		57EEE7801E36600000FA9251 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				57EEE7811E36600000FA9251 /* HKTabBar.h */,
+				57EEE7821E36600000FA9251 /* HKTabBar.m */,
+				57EEE7831E36600000FA9251 /* UIView+HKExtension.h */,
+				57EEE7841E36600000FA9251 /* UIView+HKExtension.m */,
+			);
+			name = TabBar;
+			path = HKScrollingNavAndTabBarExample/TabBar;
+			sourceTree = SOURCE_ROOT;
+		};
+		57F925671E36618000B085FF /* HKScrollingNavAndTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				57F925681E36618000B085FF /* UIView+HKScrollingNavAndBar.h */,
+				57F925691E36618000B085FF /* UIView+HKScrollingNavAndBar.m */,
+				57F9256A1E36618000B085FF /* UIViewController+HKScrollingNavAndTabBar.h */,
+				57F9256B1E36618000B085FF /* UIViewController+HKScrollingNavAndTabBar.m */,
+			);
+			name = HKScrollingNavAndTabBar;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		57DF8D0F1E2527C1000CFC45 /* HKScrollingNavAndTabBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 57DF8D271E2527C1000CFC45 /* Build configuration list for PBXNativeTarget "HKScrollingNavAndTabBar" */;
+			buildPhases = (
+				57DF8D0C1E2527C1000CFC45 /* Sources */,
+				57DF8D0D1E2527C1000CFC45 /* Frameworks */,
+				57DF8D0E1E2527C1000CFC45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HKScrollingNavAndTabBar;
+			productName = HKScrollingNavAndTabBar;
+			productReference = 57DF8D101E2527C1000CFC45 /* HKScrollingNavAndTabBar.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		57DF8D081E2527C1000CFC45 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = HK;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = hkhust;
+				TargetAttributes = {
+					57DF8D0F1E2527C1000CFC45 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 57DF8D0B1E2527C1000CFC45 /* Build configuration list for PBXProject "HKScrollingNavAndTabBar" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 57DF8D071E2527C1000CFC45;
+			productRefGroup = 57DF8D111E2527C1000CFC45 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				57DF8D0F1E2527C1000CFC45 /* HKScrollingNavAndTabBar */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		57DF8D0E1E2527C1000CFC45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57EEE7881E36600000FA9251 /* Assets.xcassets in Resources */,
+				57EEE78B1E36600000FA9251 /* LaunchScreen.storyboard in Resources */,
+				57EEE78C1E36600000FA9251 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		57DF8D0C1E2527C1000CFC45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57EEE7871E36600000FA9251 /* AppDelegate.m in Sources */,
+				57F9256D1E36618000B085FF /* UIViewController+HKScrollingNavAndTabBar.m in Sources */,
+				57F9256C1E36618000B085FF /* UIView+HKScrollingNavAndBar.m in Sources */,
+				57EEE78A1E36600000FA9251 /* HKScrollingSegmentedViewController.m in Sources */,
+				57EEE7921E36600000FA9251 /* UIView+HKExtension.m in Sources */,
+				57EEE7901E36600000FA9251 /* HKScrollingNavBarViewController.m in Sources */,
+				57EEE78F1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.m in Sources */,
+				57EEE7931E36600000FA9251 /* ViewController.m in Sources */,
+				57EEE78D1E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.m in Sources */,
+				57EEE7911E36600000FA9251 /* HKTabBar.m in Sources */,
+				57EEE7681E365FF600FA9251 /* main.m in Sources */,
+				57EEE78E1E36600000FA9251 /* HKScrollingNavAndTabBarViewController.m in Sources */,
+				57EEE7891E36600000FA9251 /* HKScrolingBaseViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		57EEE7721E36600000FA9251 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				57EEE7731E36600000FA9251 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		57DF8D251E2527C1000CFC45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		57DF8D261E2527C1000CFC45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		57DF8D281E2527C1000CFC45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HKScrollingNavAndTabBarExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.com.hkhust.HKScrollingNavAndTabBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		57DF8D291E2527C1000CFC45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HKScrollingNavAndTabBarExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.com.hkhust.HKScrollingNavAndTabBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		57DF8D0B1E2527C1000CFC45 /* Build configuration list for PBXProject "HKScrollingNavAndTabBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57DF8D251E2527C1000CFC45 /* Debug */,
+				57DF8D261E2527C1000CFC45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		57DF8D271E2527C1000CFC45 /* Build configuration list for PBXNativeTarget "HKScrollingNavAndTabBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57DF8D281E2527C1000CFC45 /* Debug */,
+				57DF8D291E2527C1000CFC45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 57DF8D081E2527C1000CFC45 /* Project object */;
+}
