@@ -13,7 +13,6 @@
 		57EEE7891E36600000FA9251 /* HKScrolingBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE76E1E36600000FA9251 /* HKScrolingBaseViewController.m */; };
 		57EEE78A1E36600000FA9251 /* HKScrollingSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7701E36600000FA9251 /* HKScrollingSegmentedViewController.m */; };
 		57EEE78B1E36600000FA9251 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57EEE7721E36600000FA9251 /* LaunchScreen.storyboard */; };
-		57EEE78C1E36600000FA9251 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57EEE7741E36600000FA9251 /* Info.plist */; };
 		57EEE78D1E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7771E36600000FA9251 /* HKScrollingNavAndExceedTabBarViewController.m */; };
 		57EEE78E1E36600000FA9251 /* HKScrollingNavAndTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE7791E36600000FA9251 /* HKScrollingNavAndTabBarViewController.m */; };
 		57EEE78F1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57EEE77C1E36600000FA9251 /* HKScrollingNavAndToolbarViewController.m */; };
@@ -88,15 +87,15 @@
 			isa = PBXGroup;
 			children = (
 				57F925671E36618000B085FF /* HKScrollingNavAndTabBar */,
+				57EEE7691E36600000FA9251 /* AppDelegate.h */,
+				57EEE76A1E36600000FA9251 /* AppDelegate.m */,
+				57EEE7851E36600000FA9251 /* ViewController.h */,
+				57EEE7861E36600000FA9251 /* ViewController.m */,
 				57EEE76C1E36600000FA9251 /* Base */,
 				57EEE7751E36600000FA9251 /* NavAndTab */,
 				57EEE77A1E36600000FA9251 /* NavAndToolbar */,
 				57EEE77D1E36600000FA9251 /* NavBarOnly */,
 				57EEE7801E36600000FA9251 /* TabBar */,
-				57EEE7691E36600000FA9251 /* AppDelegate.h */,
-				57EEE76A1E36600000FA9251 /* AppDelegate.m */,
-				57EEE7851E36600000FA9251 /* ViewController.h */,
-				57EEE7861E36600000FA9251 /* ViewController.m */,
 				57EEE7711E36600000FA9251 /* Base.lproj */,
 				57EEE76B1E36600000FA9251 /* Assets.xcassets */,
 				57EEE7741E36600000FA9251 /* Info.plist */,
@@ -250,7 +249,6 @@
 			files = (
 				57EEE7881E36600000FA9251 /* Assets.xcassets in Resources */,
 				57EEE78B1E36600000FA9251 /* LaunchScreen.storyboard in Resources */,
-				57EEE78C1E36600000FA9251 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
