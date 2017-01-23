@@ -28,7 +28,7 @@ static const CGFloat kToolbarHeight = 50.f;
     [self hk_managerBotomBar:self.toolbar];
     self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionTop;
     [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
-        NSLog(@"state:%ld",(long)state);
+        NSLog(@"HKScrollingNavAndToolbarViewController state:%ld",(long)state);
     }];
 }
 

@@ -12,14 +12,20 @@
 #pragma mark -
 
 typedef NS_ENUM(NSUInteger, HKScrolingHeaderViewSegmentType) {
+    /** 选择要控制滑动的Bar */
     HKScrolingHeaderViewSegmentTypeBarChoose = 0,
+    /** 选择滑动过程中是否需要改变透明度 */
     HKScrolingHeaderViewSegmentTypeAlphaEnable,
+    /** 选择滑topBar收起时停留位置 */
     HKScrolingHeaderViewSegmentTypeTopBarPostion,
 };
 
 typedef NS_ENUM(NSUInteger, HKScrolingHeaderViewBarChooseType) {
+    /** 同时控制滑动的NavgationBar和TabBar */
     HKScrolingHeaderViewBarChooseTypeNavAndTab = 0,
+    /** 只控制NavgationBar */
     HKScrolingHeaderViewBarChooseTypeNavOnly,
+    /** 只控制TabBar */
     HKScrolingHeaderViewBarChooseTypeTabOnly,
 };
 

@@ -23,7 +23,7 @@
     [self hk_managerTopBar:self.navigationController.navigationBar];
     [self hk_managerBotomBar:self.tabBarController.tabBar];
     [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
-        NSLog(@"state:%ld",(long)state);
+        NSLog(@"HKScrollingNavBarViewController state:%ld",(long)state);
     }];
 }
 
