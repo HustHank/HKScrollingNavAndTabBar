@@ -1,6 +1,10 @@
 HKScrollingNavAndTabBar
 ==============
 
+
+[![Pod License](https://img.shields.io/badge/license-MIT-blue.svg)](https://cocoapods.org/pods/HKScrollingNavAndTabBar)
+
+
 An easy to use library that manages hiding and showing of navigation bar, tab bar or toolbar when user scrolls.
 - [Features](#features)
 - [Installation](#installation)
@@ -48,6 +52,13 @@ Support function:
 
 #Installation
 
+### CocoaPods
+The easiest way of installing HKScrollingNavAndTabBar is via [CocoaPods](http://cocoapods.org/). 
+
+- `pod 'HKScrollingNavAndTabBar'`
+- `#import <UIViewController+HKScrollingNavAndTabBar.h>` where you want to scrolling navigationBar or tabBar.
+
+### Old-fashioned way
 - Add `HKScrollingNavAndTabBar` folder to your project.
 - `#import "UIViewController+HKScrollingNavAndTabBar.h"` where you want to scrolling navigationBar or tabBar.
 
