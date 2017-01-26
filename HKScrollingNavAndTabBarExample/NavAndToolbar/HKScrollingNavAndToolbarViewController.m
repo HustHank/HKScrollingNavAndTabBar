@@ -28,7 +28,20 @@ static const CGFloat kToolbarHeight = 50.f;
     [self hk_managerBotomBar:self.toolbar];
     self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionTop;
     [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
-        NSLog(@"HKScrollingNavAndToolbarViewController state:%ld",(long)state);
+        switch (state) {
+            case HKScrollingNavAndTabBarStateExpanded:
+                NSLog(@"navbar expended");
+                break;
+            case HKScrollingNavAndTabBarStateExpanding:
+                NSLog(@"navbar is expending");
+                break;
+            case HKScrollingNavAndTabBarStateContracting:
+                NSLog(@"navbar is contracting");
+                break;
+            case HKScrollingNavAndTabBarStateContracted:
+                NSLog(@"navbar contracted");
+                break;
+        }
     }];
 }
 
