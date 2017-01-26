@@ -5,6 +5,7 @@ An easy to use library that manages hiding and showing of navigation bar, tab ba
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Note](#note)
 
 
 #Features 
@@ -51,6 +52,68 @@ Support function:
 - `#import "UIViewController+HKScrollingNavAndTabBar.h"` where you want to scrolling navigationBar or tabBar.
 
 #Usage
+**In UIViewController:**
+Start scrolling navigation bar while a scrollView scroll:
+```objective-c
+[self hk_followScrollView:self.scrollView];
+```
+
+Stop scrolling navigation bar:
+```objective-c
+[self hk_stopFollowingScrollView];
+```
+
+Scrolling with tab bar:
+```objective-c
+[self hk_managerBotomBar:self.toolBar]
+```
+
+Or scrolling with tool bar:
+```objective-c
+[self hk_managerBotomBar:self.tabBarController.tabBar]
+```
+
+Scrolling without navigation bar:
+```objective-c
+[self hk_managerTopBar:nil];
+```
+
+Scrolling without tab bar:
+```objective-c
+[self hk_managerBotomBar:nil];
+```
+
+Set nav bar contracted at top:
+```objective-c
+self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionTop;
+```
+
+Or set nav bar contracted at top:
+```objective-c
+self.hk_topBarContracedPostion = HKScrollingTopBarContractedPositionStatusBar;
+```
+
+Monitor nav or tab bar state:
+```objective-c
+[self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
+        switch (state) {
+            case HKScrollingNavAndTabBarStateExpanded:
+                NSLog(@"navbar expended");
+                break;
+            case HKScrollingNavAndTabBarStateExpanding:
+                NSLog(@"navbar is expending");
+                break;
+            case HKScrollingNavAndTabBarStateContracting:
+                NSLog(@"navbar is contracting");
+                break;
+            case HKScrollingNavAndTabBarStateContracted:
+                NSLog(@"navbar contracted");
+                break;
+        }
+       
+    }];
+```
+
 Below code is an example of how your UIViewController subclass should look:
 ```objective-c
 - (void)viewDidLoad {
@@ -59,8 +122,22 @@ Below code is an example of how your UIViewController subclass should look:
     [self hk_followScrollView:self.tableView];
     [self hk_managerTopBar:self.navigationController.navigationBar];
     [self hk_managerBotomBar:self.tabBarController.tabBar];
-    [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
-        NSLog(@"HKScrollingNavAndTabBarViewController state:%ld",(long)state);
+        [self hk_setBarDidChangeStateBlock:^(HKScrollingNavAndTabBarState state) {
+        switch (state) {
+            case HKScrollingNavAndTabBarStateExpanded:
+                NSLog(@"navbar expended");
+                break;
+            case HKScrollingNavAndTabBarStateExpanding:
+                NSLog(@"navbar is expending");
+                break;
+            case HKScrollingNavAndTabBarStateContracting:
+                NSLog(@"navbar is contracting");
+                break;
+            case HKScrollingNavAndTabBarStateContracted:
+                NSLog(@"navbar contracted");
+                break;
+        }
+       
     }];
 }
 
