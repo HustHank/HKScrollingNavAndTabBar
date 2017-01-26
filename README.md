@@ -1,9 +1,9 @@
 HKScrollingNavAndTabBar
 ==============
 
-[![Pod Version](https://img.shields.io/badge/pod-v1.0.0-blue.svg)](https://cocoapods.org/pods/HKScrollingNavAndTabBar)
+[![Pod Version](https://img.shields.io/cocoapods/v/HKScrollingNavAndTabBar.svg)](https://cocoapods.org/pods/HKScrollingNavAndTabBar)
 [![Pod License](https://img.shields.io/badge/license-MIT-blue.svg)](https://cocoapods.org/pods/HKScrollingNavAndTabBar)
-
+[![GitHub tag](https://img.shields.io/github/tag/HustHank/HKScrollingNavAndTabBar.svg)](https://github.com/HustHank/HKScrollingNavAndTabBar/tags)
 
 
 An easy to use library that manages hiding and showing of navigation bar, tab bar or toolbar when user scrolls.
