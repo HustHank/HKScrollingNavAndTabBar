@@ -2,7 +2,7 @@ HKScrollingNavAndTabBar
 ==============
 
 [![Pod Version](https://img.shields.io/badge/pod-v1.0.0-blue.svg)](https://cocoapods.org/pods/HKScrollingNavAndTabBar)
-[![Pod License](https://img.shields.io/badge/license-MIT-green.svg)](https://cocoapods.org/pods/HKScrollingNavAndTabBar)
+[![Pod License](https://img.shields.io/badge/license-MIT-blue.svg)](https://cocoapods.org/pods/HKScrollingNavAndTabBar)
 
 
 
