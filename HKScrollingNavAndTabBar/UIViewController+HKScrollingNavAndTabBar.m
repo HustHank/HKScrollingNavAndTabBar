@@ -222,12 +222,12 @@
     UIEdgeInsets scrollViewInset = self.hk_scrollView.contentInset;
     if (self.hk_topBar) {
         CGFloat navBarMaxY = CGRectGetMaxY(self.hk_topBar.frame);
-        scrollViewInset.top = navBarMaxY;
+        scrollViewInset.top = [self hk_adjustTopInset:navBarMaxY];
     }
     
     if (self.hk_bottomBar) {
         CGFloat tabBarMinY = CGRectGetMinY(self.hk_bottomBar.frame);
-        scrollViewInset.bottom = MAX(0, [self.hk_bottomBar hk_contractedOffsetY] - tabBarMinY);
+        scrollViewInset.bottom = [self hk_adjustBottomInset:MAX(0, [self.hk_bottomBar hk_contractedOffsetY] - tabBarMinY)];
     }
     
     self.hk_scrollView.contentInset = scrollViewInset;
@@ -387,6 +387,20 @@
         scroll = (UIScrollView *)self.hk_scrollableView;
     }
     return scroll;
+}
+
+- (CGFloat)hk_adjustTopInset:(CGFloat)topInset {
+    if (@available(iOS 11.0, *)) {
+        return topInset - (self.hk_scrollView.adjustedContentInset.top - self.hk_scrollView.contentInset.top);
+    }
+    return topInset;
+}
+
+- (CGFloat)hk_adjustBottomInset:(CGFloat)bottomInset {
+    if (@available(iOS 11.0, *)) {
+        return bottomInset - (self.hk_scrollView.adjustedContentInset.bottom - self.hk_scrollView.contentInset.bottom);
+    }
+    return bottomInset;
 }
 
 #pragma mark - UIGestureRecognizerDelegate

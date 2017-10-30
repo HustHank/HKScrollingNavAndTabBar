@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, HKScrollingNavAndBarPosition) {
 @property (nonatomic, assign) BOOL hk_alphaFadeEnabled;
 
 /** 根据偏移移动当前View */
-- (CGFloat)hk_updateOffsetY:(CGFloat)deltaY;
+- (void)hk_updateOffsetY:(CGFloat)deltaY;
 
 /** 手动展开 */
 - (CGFloat)hk_expand;

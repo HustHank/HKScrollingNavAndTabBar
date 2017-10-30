@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) NSMutableArray *hk_visibleSubViews;
 
+@property (nonatomic, assign) CGFloat hk_prevOffsetY;
+
 @end
 
 @implementation UIView (HKScrollingNavAndBar)
@@ -36,6 +38,10 @@
 
 - (void)setHk_visibleSubViews:(NSMutableArray *)hk_visibleSubViews {
     objc_setAssociatedObject(self, @selector(hk_visibleSubViews), hk_visibleSubViews, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)setHk_prevOffsetY:(CGFloat)hk_prevOffsetY {
+    objc_setAssociatedObject(self, @selector(hk_prevOffsetY), @(hk_prevOffsetY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Getter
@@ -76,26 +82,28 @@
     return objc_getAssociatedObject(self, @selector(hk_visibleSubViews));
 }
 
+- (CGFloat)hk_prevOffsetY {
+    return [objc_getAssociatedObject(self, @selector(hk_prevOffsetY)) floatValue];
+}
+
 #pragma makr - Public Method
-- (CGFloat)hk_updateOffsetY:(CGFloat)deltaY {
+- (void)hk_updateOffsetY:(CGFloat)deltaY {
     
-    CGFloat viewOffsetY = 0;
     CGFloat currentViewY = CGRectGetMinY(self.frame);
-    CGFloat newOffsetY = [self hk_offsetYWithDelta:deltaY];
-    viewOffsetY = currentViewY - newOffsetY;
-    
-    if (0 == viewOffsetY) {
-        return viewOffsetY;
+    if (self.hk_prevOffsetY == currentViewY) {
+        return;
     }
-    
+    CGFloat newOffsetY = [self hk_offsetYWithDelta:deltaY];
     CGRect viewFrame = self.frame;
     viewFrame.origin.y = newOffsetY;
     self.frame = viewFrame;
+    if (newOffsetY != currentViewY) {
+       self.hk_prevOffsetY = currentViewY;
+    }
     
     if (self.hk_alphaFadeEnabled) {
         CGFloat alpha = 1 - fabs(currentViewY - self.hk_expandedOffsetY) * 1.0f / ([self hk_ViewMaxY] - [self hk_viewMinY]);
         [self hk_updateSubviewsToAlpha:alpha];
-        
     } else {
         if ([self hk_isContracted]) {
             [self hk_updateSubviewsToAlpha:0.f];
@@ -103,8 +111,6 @@
             [self hk_updateSubviewsToAlpha:1.f];
         }
     }
-    
-    return viewOffsetY;
 }
 
 - (CGFloat)hk_expand {
