@@ -47,7 +47,7 @@
     
     self.centerBtn.centerX = self.centerX;
     //调整中间按钮的中线点Y值
-    self.centerBtn.centerY = (self.height - (self.centerBtn.height - self.height)) * 0.5;
+    self.centerBtn.centerY = 4.5;
     
     NSInteger btnIndex = 0;
     for (UIView *btn in self.subviews) {//遍历tabbar的子控件
